@@ -1,9 +1,10 @@
 import './App.css'
+import WebDialog from './component'
 
 function App() {
 	return (
 		<div className="App">
-			Hello Dialog
+			<WebDialog />
 		</div>
 	)
 }
