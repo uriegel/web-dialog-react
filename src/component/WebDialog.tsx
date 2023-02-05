@@ -9,3 +9,4 @@ export const WebDialog = ({ }: WebDialogProp) => {
         <div>Hello Web Dialog</div>
     )
 }
+
