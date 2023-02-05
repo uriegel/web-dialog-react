@@ -13,6 +13,15 @@ const changeTheme = (theme: string) => {
     document.body.classList.add(theme)    
 }
 
+interface ExtendedContentProp {
+    option1: boolean
+    setOption1: (val: boolean)=>void
+    option2: boolean
+    setOption2: (val: boolean)=>void
+    option3: boolean
+    setOption3: (val: boolean)=>void
+}
+
 function App() {
     
     const [theme, setTheme] = useState(themes[0])
@@ -131,48 +140,71 @@ function App() {
         </>
     )
 
-    const ExtendedContent = () => (
-        <>
-            <div>
-                <input type="checkbox" className="wdb-focusable" name="chkbx1" checked />
-                <label htmlFor="chkbx1">First option</label>
-            </div>
-            <div>
-                <input type="checkbox" className="wdb-focusable" name="chkbx2" />
-                <label htmlFor="chkbx2">2nd option</label>
-            </div>
-            <div>
-                <input type="checkbox" className="wdb-focusable" disabled name="chkbx3" />
-                <label htmlFor="chkbx3">2nd option</label>
-            </div>
-            <div>
-                <input type="checkbox" className="wdb-focusable" name="chkbx4" />
-                <label htmlFor="chkbx3">2nd option</label>
-                </div>
-        </>
-    )
+    const ExtendedContent = ({option1, option2, option3, setOption1, setOption2, setOption3 }: ExtendedContentProp) => {
+        
+        const ExtendedContent = () => {
+
+            return (
+                <>
+                    <div>
+                        <input type="checkbox" onChange={e => setOption1(e.currentTarget.checked)} className="wdb-focusable" name="chkbx1" defaultChecked={option1}/>
+                        <label htmlFor="chkbx1">First option</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" onChange={e => setOption2(e.currentTarget.checked)} className="wdb-focusable" name="chkbx2" defaultChecked={option2}/>
+                        <label htmlFor="chkbx2">2nd option</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" className="wdb-focusable" disabled name="chkbx3" />
+                        <label htmlFor="chkbx3">2nd option</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" onChange={e => setOption3(e.currentTarget.checked)} className="wdb-focusable" name="chkbx4" defaultChecked={option3}/>
+                        <label htmlFor="chkbx3">2nd option</label>
+                    </div>
+                </>
+            )
+        }
+        return ExtendedContent
+    }
 
     const showExtendedDialog = async () => {
+
+        let option1 = false 
+        let option2 = true 
+        let option3 = false 
+
         const res = await showDialog({
             text: "Standard extended",
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true,
-            extended: ExtendedContent
+            extended: ExtendedContent({
+                option1, option2, option3,
+                setOption1: (val: boolean) => { option1 = val }, setOption2: (val: boolean) => { option2 = val }, setOption3: (val: boolean) => { option3 = val }
+            })
         })
-        console.log("Dialog closed", res)
+        console.log("Dialog closed", res, option1, option2, option3)
     }
 
     const showExtendedInputDialog = async () => {
+
+        let option1 = false 
+        let option2 = true 
+        let option3 = false 
+
         const res = await showDialog({
             text: "Standard extended",
             inputText: "The text input",
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true,
-            extended: ExtendedContent
+            extended: ExtendedContent({
+                option1, option2, option3,
+                setOption1: (val: boolean) => { option1 = val }, setOption2: (val: boolean) => { option2 = val }, setOption3: (val: boolean) => { option3 = val }
+            })
         })
-        console.log("Dialog closed", res)
+        console.log("Dialog closed", res, option1, option2, option3)
     }
 
     const showExtendedNoControlsDialog = async () => {
