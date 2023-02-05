@@ -15,16 +15,113 @@ const changeTheme = (theme: string) => {
 
 function App() {
     
-    const [theme, setTheme] = useState(themes[1])
-
-    const showDialogButton = () => {
-        showDialog()
-    }
+    const [theme, setTheme] = useState(themes[0])
 
     const onThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const theme = themes.find(n => n.name == e.target.value)!
         changeTheme(theme.theme)
         setTheme(theme)
+    }
+
+    const showStandardDialog = async () => {
+        const res = await showDialog({
+            text: "Standard",
+            btnOk: true,
+            btnCancel: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const showSlideDialog = async () => {
+        const res = await showDialog({
+            text: "Slide",
+            slide: true,
+            btnOk: true,
+            btnCancel: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const showSlideReverseDialog = async () => {
+        const res = await showDialog({
+            text: "Slide reverse",
+            slideReverse: true,
+            btnOk: true,
+            btnCancel: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const show3ButtonsDialog = async () => {
+        const res = await showDialog({
+            text: "3 Buttons",
+            btnYes: true,
+            btnNo: true,
+            btnCancel: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const showTextInputDialog = async () => {
+        const res = await showDialog({
+            text: "Text input:",
+            inputText: "The text input",
+            btnOk: true,
+            btnCancel: true,
+            defBtnCancel: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const showRenameDialog = async () => {
+        const res = await showDialog({
+            text: "Rename File:",
+            inputText: "Apocalypse Now.mp4",
+            inputSelectRange: [0, 14],
+            btnOk: true,
+            btnCancel: true,
+            defBtnOk: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const showOkDialog = async () => {
+        const res = await showDialog({
+            text: "Only Ok", 
+            btnOk: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const showYesNoDialog = async () => {
+        const res = await showDialog({
+            text: "Yes and No", 
+            btnYes: true,
+            btnNo: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const showFullScreenDialog = async () => {
+        const res = await showDialog({
+            text: "Fullscreen dialog",
+            btnOk: true,
+            fullscreen: true,
+            btnCancel: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const show2Dialogs = async () => {
+        await showDialog({
+            text: "First Dialog",
+            btnOk: true
+        })
+        const res = await showDialog({
+            text: "Second  Dialog",
+            btnOk: true
+        })
+        console.log("Dialog closed", res)
     }
 
     return (
@@ -37,19 +134,19 @@ function App() {
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
             </p>
             <p>
-                <button onClick={showDialogButton}>Show Dialog</button> 
+                <button onClick={showStandardDialog}>Show Dialog</button> 
                 <button>Show Dialog Extended</button> 
                 <button>Show Dialog Input Extended</button> 
                 <button>Show Dialog Extended no Controls</button> 
-                <button>Slide Left</button> 
-                <button>Slide Right</button> 
-                <button>3 Buttons</button> 
-                <button>Text input</button> 
-                <button>Rename file</button> 
-                <button>OK</button> 
-                <button>Ja Nein</button>
-                <button>Fullscreen</button>
-                <button>2 Dialogs</button>
+                <button onClick={showSlideDialog}>Slide Left</button> 
+                <button onClick={showSlideReverseDialog}>Slide Right</button> 
+                <button onClick={show3ButtonsDialog}>3 Buttons</button> 
+                <button onClick={showTextInputDialog}>Text input</button> 
+                <button onClick={showRenameDialog}>Rename file</button> 
+                <button onClick={showOkDialog}>OK</button> 
+                <button onClick={showYesNoDialog}>Ja Nein</button>
+                <button onClick={showFullScreenDialog}>Fullscreen</button>
+                <button onClick={show2Dialogs}>2 Dialogs</button>
             </p>
             <p>
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
