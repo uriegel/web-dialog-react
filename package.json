@@ -9,6 +9,9 @@
   "files": [
     "dist"
   ],
+  "dependencies": {
+    "web-dialog-box": "^3.2.1"
+  },
   "devDependencies": {
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",

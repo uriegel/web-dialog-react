@@ -1,13 +1,20 @@
-import React from 'react'
-import './WebDialog.css'
+import { DialogBox } from 'web-dialog-box'
 
-interface WebDialogProp {
+export const showDialog = async () => {
+    const dialog = new DialogBox()
+    document.body.appendChild(dialog)
+
+    dialog.addEventListener("dialogClosed", () => {
+        console.log("Dialog closed now")
+        dialog.remove()
+    })
+
+    const res = await dialog.show({
+        text: "Standard",
+        btnOk: true,
+        btnCancel: true
+    })    
+    
+    console.log("Dialog closed", res)
 }
 
-const WebDialog = ({ }: WebDialogProp) => {
-    return (
-        <div>Hello Web Dialog</div>
-    )
-}
-
-export default WebDialog
