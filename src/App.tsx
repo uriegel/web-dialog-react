@@ -131,6 +131,50 @@ function App() {
         </>
     )
 
+    const ExtendedContent = () => (
+        <>
+            <div>
+                <input type="checkbox" className="wdb-focusable" name="chkbx1" checked />
+                <label htmlFor="chkbx1">First option</label>
+            </div>
+            <div>
+                <input type="checkbox" className="wdb-focusable" name="chkbx2" />
+                <label htmlFor="chkbx2">2nd option</label>
+            </div>
+            <div>
+                <input type="checkbox" className="wdb-focusable" disabled name="chkbx3" />
+                <label htmlFor="chkbx3">2nd option</label>
+            </div>
+            <div>
+                <input type="checkbox" className="wdb-focusable" name="chkbx4" />
+                <label htmlFor="chkbx3">2nd option</label>
+                </div>
+        </>
+    )
+
+    const showExtendedDialog = async () => {
+        const res = await showDialog({
+            text: "Standard extended",
+            btnOk: true,
+            btnCancel: true,
+            defBtnCancel: true,
+            extended: ExtendedContent
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const showExtendedInputDialog = async () => {
+        const res = await showDialog({
+            text: "Standard extended",
+            inputText: "The text input",
+            btnOk: true,
+            btnCancel: true,
+            defBtnCancel: true,
+            extended: ExtendedContent
+        })
+        console.log("Dialog closed", res)
+    }
+
     const showExtendedNoControlsDialog = async () => {
         const res = await showDialog({
             text: "Standard extended no Controls",
@@ -153,8 +197,8 @@ function App() {
             </p>
             <p>
                 <button onClick={showStandardDialog}>Show Dialog</button> 
-                <button>Show Dialog Extended</button> 
-                <button>Show Dialog Input Extended</button> 
+                <button onClick={showExtendedDialog}>Show Dialog Extended</button> 
+                <button onClick={showExtendedInputDialog}>Show Dialog Input Extended</button> 
                 <button onClick={showExtendedNoControlsDialog}>Show Dialog Extended no Controls</button> 
                 <button onClick={showSlideDialog}>Slide Left</button> 
                 <button onClick={showSlideReverseDialog}>Slide Right</button> 
