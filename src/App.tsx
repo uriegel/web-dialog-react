@@ -124,6 +124,24 @@ function App() {
         console.log("Dialog closed", res)
     }
 
+    const ExtendedContentNoColtrols = () => (
+        <>
+            <p>Some extended content</p>
+            <p>Some other extended content</p>
+        </>
+    )
+
+    const showExtendedNoControlsDialog = async () => {
+        const res = await showDialog({
+            text: "Standard extended no Controls",
+            btnOk: true,
+            btnCancel: true,
+            defBtnCancel: true,
+            extended: ExtendedContentNoColtrols
+        })
+        console.log("Dialog closed", res)
+    }
+
     return (
         <div className="App">
             <select value={theme.name} onChange={onThemeChange}>
@@ -137,7 +155,7 @@ function App() {
                 <button onClick={showStandardDialog}>Show Dialog</button> 
                 <button>Show Dialog Extended</button> 
                 <button>Show Dialog Input Extended</button> 
-                <button>Show Dialog Extended no Controls</button> 
+                <button onClick={showExtendedNoControlsDialog}>Show Dialog Extended no Controls</button> 
                 <button onClick={showSlideDialog}>Slide Left</button> 
                 <button onClick={showSlideReverseDialog}>Slide Right</button> 
                 <button onClick={show3ButtonsDialog}>3 Buttons</button> 

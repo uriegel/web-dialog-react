@@ -1,3 +1,5 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import { DialogBox } from 'web-dialog-box'
 
 interface Settings {
@@ -15,10 +17,22 @@ interface Settings {
     inputText?: string
     inputSelectRange?: number[]
     fullscreen?: boolean
+    extended?: ()=>JSX.Element
 }
 
 export const showDialog = async (settings: Settings) => {
     const dialog = new DialogBox()
+    if (settings.extended) {
+        const extended = document.createElement("div")
+        extended.id = "extended"
+        const root = ReactDOM.createRoot(extended)
+        root.render(
+            <React.StrictMode>
+                { settings.extended() }
+            </React.StrictMode>
+        )
+        dialog.appendChild(extended)
+    }
     document.body.appendChild(dialog)
 
     dialog.addEventListener("dialogClosed", dialog.remove)
@@ -35,7 +49,8 @@ export const showDialog = async (settings: Settings) => {
         defBtnCancel: settings.defBtnCancel,
         inputText: settings.inputText,
         inputSelectRange: settings.inputSelectRange,
-        fullscreen: settings.fullscreen
+        fullscreen: settings.fullscreen,
+        extended: settings.extended ? "extended" : undefined
     })    
     
     return res
