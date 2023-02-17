@@ -20,7 +20,10 @@ interface Settings {
     extended?: ()=>JSX.Element
 }
 
+var lastActive: HTMLElement| null = null
+
 export const showDialog = async (settings: Settings) => {
+    lastActive = document.activeElement as HTMLElement
     const dialog = new DialogBox()
     if (settings.extended) {
         const extended = document.createElement("div")
@@ -35,7 +38,10 @@ export const showDialog = async (settings: Settings) => {
     }
     document.body.appendChild(dialog)
 
-    dialog.addEventListener("dialogClosed", dialog.remove)
+    dialog.addEventListener("dialogClosed", () => {
+        dialog.remove()
+        lastActive?.focus()
+    })
 
     const res = await dialog.show({
         text: settings.text,
@@ -52,7 +58,6 @@ export const showDialog = async (settings: Settings) => {
         fullscreen: settings.fullscreen,
         extended: settings.extended ? "extended" : undefined
     })    
-    
     return res
 }
 

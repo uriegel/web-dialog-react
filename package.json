@@ -1,6 +1,6 @@
 {
   "name": "web-dialog-react",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Web Dialog using React",
   "author": "uriegel",
   "license": "MIT",
@@ -23,10 +23,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "typescript": "tsc -p src/component",
-    "copy": "cp src/component/WebDialog.css dist/",
     "do publish test": "npm run typescript && npm run copy &&  npm publish --dry-run",
-    "do publish": "npm run typescript && npm run copy && npm publish"
+    "do publish": "npm run typescript && npm run copy && npm publish",
+    "typescript": "tsc -p src/component",
+    "copy": "cp src/component/WebDialog.css dist/"
   },
   "eslintConfig": {
     "rules": {
