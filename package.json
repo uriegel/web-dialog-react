@@ -1,6 +1,6 @@
 {
   "name": "web-dialog-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Web Dialog using React",
   "author": "uriegel",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "dist"
   ],
   "dependencies": {
-    "web-dialog-box": "^3.2.1"
+    "web-dialog-box": "^3.2.2"
   },
   "devDependencies": {
     "@types/node": "^16.18.11",
