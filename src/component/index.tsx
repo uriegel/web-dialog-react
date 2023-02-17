@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { DialogBox } from 'web-dialog-box'
+export { Result } from 'web-dialog-box'
 
 interface Settings {
     text: string

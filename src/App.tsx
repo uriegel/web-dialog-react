@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import './App.css'
-import { showDialog } from './component' 
+import { showDialog, Result } from './component' 
 
 const themes = [
     { name: "Blue", theme: "themeBlue" },
@@ -79,6 +79,8 @@ function App() {
             btnCancel: true,
             defBtnCancel: true
         })
+        if (res.result == Result.Cancel)                
+            console.log("Dialog closed cancelled")
         console.log("Dialog closed", res)
     }
 
