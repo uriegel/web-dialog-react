@@ -23,10 +23,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "do publish test": "npm run typescript && npm run copy &&  npm publish --dry-run",
-    "do publish": "npm run typescript && npm run copy && npm publish",
-    "typescript": "tsc -p src/component",
-    "copy": "cp src/component/WebDialog.css dist/"
+    "do publish test": "npm run typescript npm publish --dry-run",
+    "do publish": "npm run typescript && npm publish",
+    "typescript": "tsc -p src/component"
   },
   "eslintConfig": {
     "rules": {
