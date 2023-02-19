@@ -21,7 +21,7 @@
     --wdb-input-selection-color: #3584e4;
 }
 
-body.themeAdwaitaDark {
+.App.themeAdwaitaDark {
     background-color: rgb(20, 20, 20);
     color: white;
 }

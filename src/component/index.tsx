@@ -18,6 +18,7 @@ interface Settings {
     inputText?: string
     inputSelectRange?: number[]
     fullscreen?: boolean
+    dontUseApp?: boolean
     extended?: ()=>JSX.Element
 }
 
@@ -37,7 +38,10 @@ export const showDialog = async (settings: Settings) => {
         )
         dialog.appendChild(extended)
     }
-    document.body.appendChild(dialog)
+    const parent = settings.dontUseApp
+        ? document.body
+        : document.getElementsByClassName("App")[0]
+    parent?.appendChild(dialog)
 
     dialog.addEventListener("dialogClosed", () => {
         dialog.remove()

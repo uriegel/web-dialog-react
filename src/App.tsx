@@ -8,11 +8,6 @@ const themes = [
     { name: "Adwaita dark", theme: "themeAdwaitaDark" },
 ]
 
-const changeTheme = (theme: string) => {
-    themes.forEach(n => document.body.classList.remove(n.theme))
-    document.body.classList.add(theme)    
-}
-
 interface ExtendedContentProp {
     option1: boolean
     setOption1: (val: boolean)=>void
@@ -28,7 +23,6 @@ function App() {
 
     const onThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const theme = themes.find(n => n.name == e.target.value)!
-        changeTheme(theme.theme)
         setTheme(theme)
     }
 
@@ -79,7 +73,7 @@ function App() {
             btnCancel: true,
             defBtnCancel: true
         })
-        if (res.result == Result.Cancel)                
+        if (res.result == Result.Cancel)
             console.log("Dialog closed cancelled")
         console.log("Dialog closed", res)
     }
@@ -98,7 +92,7 @@ function App() {
 
     const showOkDialog = async () => {
         const res = await showDialog({
-            text: "Only Ok", 
+            text: "Only Ok",
             btnOk: true
         })
         console.log("Dialog closed", res)
@@ -106,7 +100,7 @@ function App() {
 
     const showYesNoDialog = async () => {
         const res = await showDialog({
-            text: "Yes and No", 
+            text: "Yes and No",
             btnYes: true,
             btnNo: true
         })
@@ -142,18 +136,18 @@ function App() {
         </>
     )
 
-    const ExtendedContent = ({option1, option2, option3, setOption1, setOption2, setOption3 }: ExtendedContentProp) => {
+    const ExtendedContent = ({ option1, option2, option3, setOption1, setOption2, setOption3 }: ExtendedContentProp) => {
         
         const ExtendedContent = () => {
 
             return (
                 <>
                     <div>
-                        <input type="checkbox" onChange={e => setOption1(e.currentTarget.checked)} className="wdb-focusable" name="chkbx1" defaultChecked={option1}/>
+                        <input type="checkbox" onChange={e => setOption1(e.currentTarget.checked)} className="wdb-focusable" name="chkbx1" defaultChecked={option1} />
                         <label htmlFor="chkbx1">First option</label>
                     </div>
                     <div>
-                        <input type="checkbox" onChange={e => setOption2(e.currentTarget.checked)} className="wdb-focusable" name="chkbx2" defaultChecked={option2}/>
+                        <input type="checkbox" onChange={e => setOption2(e.currentTarget.checked)} className="wdb-focusable" name="chkbx2" defaultChecked={option2} />
                         <label htmlFor="chkbx2">2nd option</label>
                     </div>
                     <div>
@@ -161,7 +155,7 @@ function App() {
                         <label htmlFor="chkbx3">2nd option</label>
                     </div>
                     <div>
-                        <input type="checkbox" onChange={e => setOption3(e.currentTarget.checked)} className="wdb-focusable" name="chkbx4" defaultChecked={option3}/>
+                        <input type="checkbox" onChange={e => setOption3(e.currentTarget.checked)} className="wdb-focusable" name="chkbx4" defaultChecked={option3} />
                         <label htmlFor="chkbx3">2nd option</label>
                     </div>
                 </>
@@ -172,9 +166,9 @@ function App() {
 
     const showExtendedDialog = async () => {
 
-        let option1 = false 
-        let option2 = true 
-        let option3 = false 
+        let option1 = false
+        let option2 = true
+        let option3 = false
 
         const res = await showDialog({
             text: "Standard extended",
@@ -191,9 +185,9 @@ function App() {
 
     const showExtendedInputDialog = async () => {
 
-        let option1 = false 
-        let option2 = true 
-        let option3 = false 
+        let option1 = false
+        let option2 = true
+        let option3 = false
 
         const res = await showDialog({
             text: "Standard extended",
@@ -221,7 +215,7 @@ function App() {
     }
 
     return (
-        <div className="App">
+        <div className={`App ${theme.theme}`} >
             <select value={theme.name} onChange={onThemeChange}>
                 {themes.map((n, i) => <option key={i}>{n.name}</option>) }
             </select>
