@@ -17,6 +17,7 @@ interface Settings {
     slideReverse?: boolean
     inputText?: string
     inputSelectRange?: number[]
+    inputSpellCheck?: boolean
     fullscreen?: boolean
     dontUseApp?: boolean
     extended?: ()=>JSX.Element
@@ -60,6 +61,7 @@ export const showDialog = async (settings: Settings) => {
         defBtnCancel: settings.defBtnCancel,
         inputText: settings.inputText,
         inputSelectRange: settings.inputSelectRange,
+        disableInputSpellCheck: !settings.inputSpellCheck,
         fullscreen: settings.fullscreen,
         extended: settings.extended ? "extended" : undefined
     })    
