@@ -1,4 +1,5 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
+import "./DialogBox.css"
 
 interface DialogBoxProps {
     hidden: boolean
@@ -24,15 +25,18 @@ interface DialogBoxProps {
 }
 
 const DialogBox = ({hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes }: DialogBoxProps) => {
-    
+
+    const dialog = useRef<HTMLDivElement>(null)
+
+    const focusables = useRef<HTMLElement[]>([])
+    const focusIndex = useRef(0)
+
     useEffect(() => {
-        // TODO find all focusables when rendered first time
-    //     const focusables = [
-    //         btnOkRef.current, btnYesRef.current, btnCancelRef.current, btnNoRef.current
-    //     ].filter(n => n != null)
-    //     console.log("focusables", focusables)
-    //     focusables[0]?.focus()
-    }, [])
+        if (dialog.current) {
+            focusables.current = [...dialog.current.querySelectorAll(".wdr--button")] as HTMLElement[]
+            console.log("focusables", focusables)
+        }
+    }, [dialog])
 
     const onFaderTransitionEnd = () => {
         if (hidden)
@@ -51,22 +55,22 @@ const DialogBox = ({hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnYe
 
     const onKeyDown = (evt: React.KeyboardEvent) => {
         switch (evt.code) {
-        //     case "Tab": 
-        //         // const setFocus = () => {
-        //         //     this.focusIndex = evt.shiftKey ? this.focusIndex - 1 : this.focusIndex + 1
-        //         //     if (this.focusIndex >= this.focusables.length)
-        //         //         this.focusIndex = 0
-        //         //     if (this.focusIndex < 0)
-        //         //         this.focusIndex = this.focusables.length - 1
-        //         //     const element = this.focusables[this.focusIndex]
-        //         //     if (!(element as any).disabled) {
-        //         //         element.focus()
-        //         //         return true
-        //         //     }
-        //         //     return false
-        //         // }
-        //         // while (!setFocus());
-        //         break
+            case "Tab": 
+                const setFocus = () => {
+                    focusIndex.current = evt.shiftKey ? focusIndex.current - 1 : focusIndex.current + 1
+                    if (focusIndex.current >= focusables.current.length)
+                        focusIndex.current = 0
+                    if (focusIndex.current < 0)
+                        focusIndex.current = focusables.current.length - 1
+                    const element = focusables.current[focusIndex.current]
+                    if (!(element as any).disabled) {
+                        element.focus()
+                        return true
+                    }
+                    return false
+                }
+                while (!setFocus());
+                break
         //     case "Enter": 
         //         //if (this.defBtn && !this.buttonHasFocus) {
         //         //     const result = 
@@ -95,7 +99,7 @@ const DialogBox = ({hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnYe
         <>
             <div className='wdr--fader' onTransitionEnd={onFaderTransitionEnd}></div>
             <div className='wdr--container' onKeyDown={onKeyDown}>
-                <div className='wdr--dialog'>
+                <div ref={dialog} className='wdr--dialog'>
                     <div className='wdr--content'>
                         <p>{text}</p>
                     </div>

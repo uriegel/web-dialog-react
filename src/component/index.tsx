@@ -66,8 +66,10 @@ export default Dialog
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// var lastActive: HTMLElement| null = null
+// TODO var lastActive: HTMLElement| null = null
 
-//TODO tab control
+//TODO input
+//TODO def button control, if button has focus state btnHasFocus
+//TODO Themes
 //TODO results
 //TODO slide
