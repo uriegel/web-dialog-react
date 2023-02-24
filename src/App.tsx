@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef, useState } from 'react'
 import './App.css'
-import Dialog, { showDialog, Result, DialogHandle } from './component' 
+import Dialog, { DialogHandle } from './component' 
 
 const themes = [
     { name: "Blue", theme: "themeBlue" },
@@ -38,7 +38,7 @@ function App() {
     }
 
     const showSlideDialog = async () => {
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Slide",
             slide: true,
             btnOk: true,
@@ -48,7 +48,7 @@ function App() {
     }
 
     const showSlideReverseDialog = async () => {
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Slide reverse",
             slideReverse: true,
             btnOk: true,
@@ -58,7 +58,7 @@ function App() {
     }
 
     const show3ButtonsDialog = async () => {
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "3 Buttons",
             btnYes: true,
             btnNo: true,
@@ -68,20 +68,20 @@ function App() {
     }
 
     const showTextInputDialog = async () => {
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Text input:",
             inputText: "The text input",
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true
         })
-        if (res.result == Result.Cancel)
-            console.log("Dialog closed cancelled")
+        // if (res.result == Result.Cancel)
+        //     console.log("Dialog closed cancelled")
         console.log("Dialog closed", res)
     }
 
     const showRenameDialog = async () => {
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Rename File:",
             inputText: "Apocalypse Now.mp4",
             inputSelectRange: [0, 14],
@@ -93,7 +93,7 @@ function App() {
     }
 
     const showOkDialog = async () => {
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Only Ok",
             btnOk: true
         })
@@ -101,7 +101,7 @@ function App() {
     }
 
     const showYesNoDialog = async () => {
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Yes and No",
             btnYes: true,
             btnNo: true
@@ -110,7 +110,7 @@ function App() {
     }
 
     const showFullScreenDialog = async () => {
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Fullscreen dialog",
             btnOk: true,
             fullscreen: true,
@@ -120,11 +120,11 @@ function App() {
     }
 
     const show2Dialogs = async () => {
-        await showDialog({
+        await dialog.current?.show({
             text: "First Dialog",
             btnOk: true
         })
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Second  Dialog",
             btnOk: true
         })
@@ -176,7 +176,7 @@ function App() {
         let option2 = true
         let option3 = false
 
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Standard extended",
             btnOk: true,
             btnCancel: true,
@@ -195,7 +195,7 @@ function App() {
         let option2 = true
         let option3 = false
 
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Standard extended",
             inputText: "The text input",
             btnOk: true,
@@ -210,7 +210,7 @@ function App() {
     }
 
     const showExtendedNoControlsDialog = async () => {
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Standard extended no Controls",
             btnOk: true,
             btnCancel: true,
