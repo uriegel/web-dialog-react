@@ -4,7 +4,6 @@
     --wdr-fader-color: rgba(0, 0, 0, 0.50); 
     --wdr-animation-duration: 0.3s;
     --wdr-button-margin: 20px 30px 30px 30px;
-    --wdr-button-marginleft: 5px;
     --wdr-button-background-color: blue;
     --wdr-button-color: white;
     --wdr-button-padding: 2px 7px;
@@ -80,6 +79,7 @@
 
 .wdr--buttons {
     display: grid;
+    grid-column-gap: 5px;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
     margin: var(--wdr-button-margin);
@@ -93,10 +93,8 @@
     color: var(--wdr-button-color);
     text-align: center;
     padding: var(--wdr-button-padding);
-    /* line-height: 20px; */
     transition: background-color var(--wdr-animation-duration), outline-color 400ms;
     border-radius: var(--wdr-button-cornerradius);
-    margin-left: var(--wdr-button-marginleft);
     border-color: var(--wdr-button-bordercolor);
     border-style: var(--wdr-button-borderstyle);
     border-width: var(--wdr-button-borderwidth);    
