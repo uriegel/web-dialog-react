@@ -1,6 +1,6 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import './App.css'
-import { showDialog, Result } from './component' 
+import Dialog, { showDialog, Result, DialogHandle } from './component' 
 
 const themes = [
     { name: "Blue", theme: "themeBlue" },
@@ -18,6 +18,8 @@ interface ExtendedContentProp {
 }
 
 function App() {
+
+    const dialog = useRef<DialogHandle>(null)
     
     const [theme, setTheme] = useState(themes[0])
 
@@ -27,7 +29,7 @@ function App() {
     }
 
     const showStandardDialog = async () => {
-        const res = await showDialog({
+        const res = await dialog.current?.show({
             text: "Standard",
             btnOk: true,
             btnCancel: true
@@ -138,16 +140,20 @@ function App() {
 
     const ExtendedContent = ({ option1, option2, option3, setOption1, setOption2, setOption3 }: ExtendedContentProp) => {
         
+        const [_option1, _setOption1] = useState(option1)
+        const [_option2, _setOption2] = useState(option2)
+        const [_option3, _setOption3] = useState(option3)
+
         const ExtendedContent = () => {
 
             return (
                 <>
                     <div>
-                        <input type="checkbox" onChange={e => setOption1(e.currentTarget.checked)} className="wdb-focusable" name="chkbx1" defaultChecked={option1} />
+                        <input type="checkbox" onChange={e => _setOption1(e.currentTarget.checked)} className="wdb-focusable" name="chkbx1" checked={_option1} />
                         <label htmlFor="chkbx1">First option</label>
                     </div>
                     <div>
-                        <input type="checkbox" onChange={e => setOption2(e.currentTarget.checked)} className="wdb-focusable" name="chkbx2" defaultChecked={option2} />
+                        <input type="checkbox" onChange={e => _setOption2(e.currentTarget.checked)} className="wdb-focusable" name="chkbx2" checked={_option2} />
                         <label htmlFor="chkbx2">2nd option</label>
                     </div>
                     <div>
@@ -155,7 +161,7 @@ function App() {
                         <label htmlFor="chkbx3">2nd option</label>
                     </div>
                     <div>
-                        <input type="checkbox" onChange={e => setOption3(e.currentTarget.checked)} className="wdb-focusable" name="chkbx4" defaultChecked={option3} />
+                        <input type="checkbox" onChange={e => _setOption3(e.currentTarget.checked)} className="wdb-focusable" name="chkbx4" checked={_option3} />
                         <label htmlFor="chkbx3">2nd option</label>
                     </div>
                 </>
@@ -216,6 +222,7 @@ function App() {
 
     return (
         <div className={`App ${theme.theme}`} >
+            <Dialog ref={dialog} />
             <select value={theme.name} onChange={onThemeChange}>
                 {themes.map((n, i) => <option key={i}>{n.name}</option>) }
             </select>
@@ -239,6 +246,8 @@ function App() {
                 <button onClick={show2Dialogs}>2 Dialogs</button>
             </p>
             <p>
+
+                
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
             </p>
             <p>

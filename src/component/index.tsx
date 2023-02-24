@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import { DialogBox } from 'web-dialog-box'
+import './Dialog.css'
 export { Result } from 'web-dialog-box'
 
 interface Settings {
@@ -22,6 +23,66 @@ interface Settings {
     dontUseApp?: boolean
     extended?: ()=>JSX.Element
 }
+
+export type DialogHandle = {
+    show: (settings: Settings)=>Promise<boolean>
+}
+
+interface DialogProp {}
+
+const Dialog = forwardRef<DialogHandle, DialogProp>(({ }, ref) => {
+    
+    const [show, setShow] = useState(false)
+    const [hidden, setHidden] = useState(true)
+    const [text, setText] = useState("")
+
+    useImperativeHandle(ref, () => ({
+        async show(settings: Settings) {
+            setShow(true)
+            setText(settings.text)
+            return false
+        }
+    }))
+
+    const onFaderTransitionEnd = () => {
+        if (hidden)
+            setShow(false)
+    }
+
+    const close = () => {
+        setHidden(true)
+    }
+
+    const onOk = () => {
+        close()
+    }
+
+    const onCancel = () => close()
+
+    useEffect(() => { if (show) setHidden(false) },
+        [show])
+    
+    return show ? (
+        <div className={`wdr--dialogroot${hidden ? " hidden" : ""}`}>
+            <div className='wdr--fader' onTransitionEnd={onFaderTransitionEnd}></div>
+            <div className='wdr--container'>
+                <div className='wdr--dialog'>
+                    <div className='wdr--content'>
+                        <p>{text}</p>
+                    </div>
+                    <div className='wdr--buttons'>
+                        <div className='wdr--button' tabIndex={1} onClick={onOk}>OK</div>
+                        <div className='wdr--button' tabIndex={2} onClick={onCancel}>Abbrechen</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ) : null
+})
+
+export default Dialog
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var lastActive: HTMLElement| null = null
 
