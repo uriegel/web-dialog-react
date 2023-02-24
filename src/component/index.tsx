@@ -70,9 +70,11 @@ const Dialog = forwardRef<DialogHandle, DialogProp>(({ }, ref) => {
                     <div className='wdr--content'>
                         <p>{text}</p>
                     </div>
-                    <div className='wdr--buttons'>
-                        <div className='wdr--button' tabIndex={1} onClick={onOk}>OK</div>
-                        <div className='wdr--button' tabIndex={2} onClick={onCancel}>Abbrechen</div>
+                    <div className='wdr--buttons-container'>
+                        <div className='wdr--buttons'>
+                            <div className='wdr--button' tabIndex={1} onClick={onOk}>OK</div>
+                            <div className='wdr--button' tabIndex={2} onClick={onCancel}>Abbrechen</div> 
+                        </div>
                     </div>
                 </div>
             </div>

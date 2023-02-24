@@ -5,7 +5,6 @@
     --wdr-animation-duration: 0.3s;
     --wdr-button-margin: 20px 30px 30px 30px;
     --wdr-button-marginleft: 5px;
-    --wdr-button-flexgrow: 0;
     --wdr-button-background-color: blue;
     --wdr-button-color: white;
     --wdr-button-padding: 2px 7px;
@@ -54,9 +53,7 @@
 }
 
 .wdr--dialog {
-    display: flex;
     margin: 30px;
-    flex-direction: column;
     border-radius: 5px;
     color: var(--wdr-main-color);
     background-color: var(--wdr-main-background-color);
@@ -77,14 +74,19 @@
     padding: 30px 30px 0px 30px;
 }
 
+.wdr--buttons-container {
+    float: right;
+}
+
 .wdr--buttons {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
     margin: var(--wdr-button-margin);
 }
 
 .wdr--button {
-    display: inline-block;
-    flex-grow: var(--wdr-button-flexgrow);
+    min-width: 40px;
     background-color: var(--wdr-button-background-color);
     outline-color: var(--wdr-main-background-color);
     user-select: none;
