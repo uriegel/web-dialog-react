@@ -20,9 +20,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "do publish test": "npm run typescript npm publish --dry-run",
-    "do publish": "npm run typescript && npm publish",
-    "typescript": "tsc -p src/component"
+    "do publish test": "npm run typescript && npm run copy && npm publish --dry-run",
+    "do publish": "npm run typescript && npm run copy && npm publish",
+    "typescript": "tsc -p src/component",
+    "copy": "cp src/component/*.css dist/"
   },
   "eslintConfig": {
     "rules": {
