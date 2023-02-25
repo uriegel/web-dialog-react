@@ -21,11 +21,11 @@ interface DialogBoxProps {
     inputSelectRange?: number[]
     inputSpellCheck?: boolean
     fullscreen?: boolean
-    extended?: ()=>JSX.Element
+    extension?: ()=>JSX.Element
 }
 
 const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
-    inputText, inputSpellCheck, inputSelectRange, slide, fullscreen }: DialogBoxProps) => {
+    inputText, inputSpellCheck, inputSelectRange, slide, fullscreen, extension }: DialogBoxProps) => {
 
     const dialog = useRef<HTMLDivElement>(null)
 
@@ -55,6 +55,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
     const onFaderTransitionEnd = () => {
         if (hidden) {
             setShow(false)
+            console.log("Guten Abend")
             setTimeout(() => setResult(dialogResult.current))
         }
     }
@@ -151,6 +152,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
                                 onFocus={selectInput}></input>)
                             : null
                         }
+                        { extension ? extension() : null }
                     </div>
                     <div>
                         <div className={`wdr--buttons${buttonFocused ? " buttonFocused" : ""}`}>

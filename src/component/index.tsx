@@ -24,7 +24,7 @@ export interface Settings {
     inputSpellCheck?: boolean
     fullscreen?: boolean
     dontUseApp?: boolean
-    extended?: ()=>JSX.Element
+    extension?: ()=>JSX.Element
 }
 
 export enum Result {
@@ -85,10 +85,11 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
     
     return show ? (
         <div className={`wdr--dialogroot${hidden ? " hidden" : ""}`} >
-            <DialogBox hidden={hidden} setShow={setShow} setResult={setResult} close={close} text={settings.current.text} btnCancel={settings.current.btnCancel} btnNo={settings.current.btnNo} btnOk={settings.current.btnOk}
-                btnYes={settings.current.btnYes} defBtnCancel={settings.current.defBtnCancel} defBtnNo={settings.current.defBtnNo} defBtnOk={settings.current.defBtnOk}
-                defBtnYes={settings.current.defBtnYes} fullscreen={settings.current.fullscreen} inputSelectRange={settings.current.inputSelectRange} 
-                inputSpellCheck={settings.current.inputSpellCheck} inputText={settings.current.inputText} slide={settings.current.slide} 
+            <DialogBox hidden={hidden} setShow={setShow} setResult={setResult} close={close} text={settings.current.text} btnCancel={settings.current.btnCancel}
+                btnNo={settings.current.btnNo} btnOk={settings.current.btnOk} btnYes={settings.current.btnYes} defBtnCancel={settings.current.defBtnCancel}
+                defBtnNo={settings.current.defBtnNo} defBtnOk={settings.current.defBtnOk} defBtnYes={settings.current.defBtnYes}
+                fullscreen={settings.current.fullscreen} inputSelectRange={settings.current.inputSelectRange} inputSpellCheck={settings.current.inputSpellCheck}
+                inputText={settings.current.inputText} slide={settings.current.slide} extension={settings.current.extension}
             />
         </div>
     ) : null
@@ -96,4 +97,3 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
 
 export default Dialog
 
-//TODO extension

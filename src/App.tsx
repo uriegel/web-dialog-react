@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './App.css'
 import Dialog, { DialogHandle, Slide } from './component' 
 
@@ -7,15 +7,6 @@ const themes = [
     { name: "Adwaita", theme: "themeAdwaita" },
     { name: "Adwaita dark", theme: "themeAdwaitaDark" },
 ]
-
-interface ExtendedContentProp {
-    option1: boolean
-    setOption1: (val: boolean)=>void
-    option2: boolean
-    setOption2: (val: boolean)=>void
-    option3: boolean
-    setOption3: (val: boolean)=>void
-}
 
 function App() {
 
@@ -132,43 +123,45 @@ function App() {
         console.log("Dialog closed", res)
     }
 
-    const ExtendedContentNoColtrols = () => (
+    const ExtendedContentNoControls = () => (
         <>
             <p>Some extended content</p>
             <p>Some other extended content</p>
         </>
     )
 
-    const ExtendedContent = ({ option1, option2, option3, setOption1, setOption2, setOption3 }: ExtendedContentProp) => {
+    const ExtendedContent = () => {
         
-        const [_option1, _setOption1] = useState(option1)
-        const [_option2, _setOption2] = useState(option2)
-        const [_option3, _setOption3] = useState(option3)
+        const [option1, setOption1] = useState(false)
+        const [option2, setOption2] = useState(true)
+        const [option3, setOption3] = useState(false)
 
-        const ExtendedContent = () => {
+        useEffect(() => {
+            return () => {
+                console.log("Am Ende")
+            }
+        }, [])
 
-            return (
-                <>
-                    <div>
-                        <input type="checkbox" onChange={e => _setOption1(e.currentTarget.checked)} className="wdb-focusable" name="chkbx1" checked={_option1} />
-                        <label htmlFor="chkbx1">First option</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" onChange={e => _setOption2(e.currentTarget.checked)} className="wdb-focusable" name="chkbx2" checked={_option2} />
-                        <label htmlFor="chkbx2">2nd option</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" className="wdb-focusable" disabled name="chkbx3" />
-                        <label htmlFor="chkbx3">2nd option</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" onChange={e => _setOption3(e.currentTarget.checked)} className="wdb-focusable" name="chkbx4" checked={_option3} />
-                        <label htmlFor="chkbx3">2nd option</label>
-                    </div>
-                </>
-            )
-        }
-        return ExtendedContent
+        return (
+            <>
+                <div>
+                    <input type="checkbox" onChange={e => setOption1(e.currentTarget.checked)} className="wdb-focusable" name="chkbx1" checked={option1} />
+                    <label htmlFor="chkbx1">First option</label>
+                </div>
+                <div>
+                    <input type="checkbox" onChange={e => setOption2(e.currentTarget.checked)} className="wdb-focusable" name="chkbx2" checked={option2} />
+                    <label htmlFor="chkbx2">2nd option</label>
+                </div>
+                <div>
+                    <input type="checkbox" className="wdb-focusable" disabled name="chkbx3" />
+                    <label htmlFor="chkbx3">2nd option</label>
+                </div>
+                <div>
+                    <input type="checkbox" onChange={e => setOption3(e.currentTarget.checked)} className="wdb-focusable" name="chkbx4" checked={option3} />
+                    <label htmlFor="chkbx3">2nd option</label>
+                </div>
+            </>
+        )
     }
 
     const showExtendedDialog = async () => {
@@ -182,10 +175,7 @@ function App() {
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true,
-            extended: ExtendedContent({
-                option1, option2, option3,
-                setOption1: (val: boolean) => { option1 = val }, setOption2: (val: boolean) => { option2 = val }, setOption3: (val: boolean) => { option3 = val }
-            })
+            extension: ExtendedContent
         })
         console.log("Dialog closed", res, option1, option2, option3)
     }
@@ -202,10 +192,7 @@ function App() {
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true,
-            extended: ExtendedContent({
-                option1, option2, option3,
-                setOption1: (val: boolean) => { option1 = val }, setOption2: (val: boolean) => { option2 = val }, setOption3: (val: boolean) => { option3 = val }
-            })
+            extension: ExtendedContent
         })
         console.log("Dialog closed", res, option1, option2, option3)
     }
@@ -216,7 +203,7 @@ function App() {
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true,
-            extended: ExtendedContentNoColtrols
+            extension: ExtendedContentNoControls
         })
         console.log("Dialog closed", res)
     }
