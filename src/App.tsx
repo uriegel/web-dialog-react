@@ -205,7 +205,6 @@ function App() {
 
     return (
         <div className={`App ${theme.theme}`} >
-            <Dialog ref={dialog} />
             <select value={theme.name} onChange={onThemeChange}>
                 {themes.map((n, i) => <option key={i}>{n.name}</option>) }
             </select>
@@ -272,13 +271,11 @@ function App() {
             <p>
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
             </p>			
+            <Dialog ref={dialog} />
 		</div>
 	)
 }
 
 export default App
 
-//TODO No adwaita style
-//TODO Set focus to early (Menu hide focuses app)
-//TODO slide runs to the wrong side when OK
 

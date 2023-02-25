@@ -48,6 +48,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
             focusables.current = inputs.concat(extendedFocusables).concat(buttons)
             focusIndex.current = 0
             setSlideControl(Slide.None)
+            //setTimeout(focusCurrent)
             focusCurrent()
             if (inputSelectRange)
                 input.current?.setSelectionRange(inputSelectRange[0], inputSelectRange[1])
@@ -62,24 +63,32 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
         }
     }
 
+    const slideEnd = (ok: boolean) => 
+        setSlideControl(
+            slide == Slide.Left
+            ? ok ? Slide.Right : Slide.Left
+            : slide == Slide.Right
+            ? ok ? Slide.Left : Slide.Right
+            : Slide.None)
+
     const onOk = () => {
         dialogResult.current = { result: Result.Ok, input: textValue }
-        setSlideControl(slide)
+        slideEnd(true)
         close()
     }
     const onYes = () => {
         dialogResult.current = { result: Result.Yes, input: textValue }
-        setSlideControl(slide)
+        slideEnd(true)
         close()
     }
     const onCancel = () =>{
         dialogResult.current = { result: Result.Cancel }
-        setSlideControl(slide)
+        slideEnd(false)
         close()
     }
     const onNo = () => {
         dialogResult.current = { result: Result.No }
-        setSlideControl(slide)
+        slideEnd(false)
         close()
     }
 
