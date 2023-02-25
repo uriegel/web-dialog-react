@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './App.css'
-import Dialog, { DialogHandle, Slide } from './component' 
+import Dialog, { DialogHandle, ExtensionProps, Slide } from './component' 
 
 const themes = [
     { name: "Blue", theme: "themeBlue" },
@@ -66,8 +66,6 @@ function App() {
             btnCancel: true,
             defBtnCancel: true
         })
-        // if (res.result == Result.Cancel)
-        //     console.log("Dialog closed cancelled")
         console.log("Dialog closed", res)
     }
 
@@ -130,17 +128,15 @@ function App() {
         </>
     )
 
-    const ExtendedContent = () => {
+    const ExtendedContent = ({onChange }: ExtensionProps) => {
         
         const [option1, setOption1] = useState(false)
         const [option2, setOption2] = useState(true)
         const [option3, setOption3] = useState(false)
 
         useEffect(() => {
-            return () => {
-                console.log("Am Ende")
-            }
-        }, [])
+            onChange({option1, option2, option3})
+        })
 
         return (
             <>
@@ -166,25 +162,20 @@ function App() {
 
     const showExtendedDialog = async () => {
 
-        let option1 = false
-        let option2 = true
-        let option3 = false
-
         const res = await dialog.current?.show({
             text: "Standard extended",
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true,
-            extension: ExtendedContent
+            extension: ExtendedContent,
+            onExtensionChanged: (val: any) => {
+                console.log("On Changed", val)
+            }
         })
-        console.log("Dialog closed", res, option1, option2, option3)
+        console.log("Dialog closed", res)
     }
 
     const showExtendedInputDialog = async () => {
-
-        let option1 = false
-        let option2 = true
-        let option3 = false
 
         const res = await dialog.current?.show({
             text: "Standard extended",
@@ -192,9 +183,12 @@ function App() {
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true,
-            extension: ExtendedContent
+            extension: ExtendedContent,
+            onExtensionChanged: (val: any) => {
+                console.log("On Changed", val)
+            }
         })
-        console.log("Dialog closed", res, option1, option2, option3)
+        console.log("Dialog closed", res)
     }
 
     const showExtendedNoControlsDialog = async () => {
@@ -282,3 +276,6 @@ function App() {
 }
 
 export default App
+
+// extension no changed function
+// extension tab extension controls

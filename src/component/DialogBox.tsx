@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { DialogResult, Result, Slide } from "."
+import { DialogResult, ExtensionProps, Result, Slide } from "."
 import "./DialogBox.css"
 
 interface DialogBoxProps {
@@ -21,11 +21,12 @@ interface DialogBoxProps {
     inputSelectRange?: number[]
     inputSpellCheck?: boolean
     fullscreen?: boolean
-    extension?: ()=>JSX.Element
+    extension?: (props: ExtensionProps) => JSX.Element
+    onExtensionChanged?: (t: any)=>void
 }
 
 const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
-    inputText, inputSpellCheck, inputSelectRange, slide, fullscreen, extension }: DialogBoxProps) => {
+    inputText, inputSpellCheck, inputSelectRange, slide, fullscreen, extension, onExtensionChanged }: DialogBoxProps) => {
 
     const dialog = useRef<HTMLDivElement>(null)
 
@@ -152,7 +153,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
                                 onFocus={selectInput}></input>)
                             : null
                         }
-                        { extension ? extension() : null }
+                        {extension && onExtensionChanged ? extension({ onChange: onExtensionChanged }) : null }
                     </div>
                     <div>
                         <div className={`wdr--buttons${buttonFocused ? " buttonFocused" : ""}`}>

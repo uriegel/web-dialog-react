@@ -8,6 +8,10 @@ export enum Slide {
     Right
 }
 
+export interface ExtensionProps {
+    onChange: (t: any)=>void
+}
+
 export interface Settings {
     text: string
     btnOk?: boolean
@@ -24,7 +28,8 @@ export interface Settings {
     inputSpellCheck?: boolean
     fullscreen?: boolean
     dontUseApp?: boolean
-    extension?: ()=>JSX.Element
+    extension?: (props: ExtensionProps) => JSX.Element
+    onExtensionChanged?: (t: any)=>void
 }
 
 export enum Result {
@@ -82,14 +87,15 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
             resolveResult.current = null
         }
     }
-    
+
     return show ? (
         <div className={`wdr--dialogroot${hidden ? " hidden" : ""}`} >
             <DialogBox hidden={hidden} setShow={setShow} setResult={setResult} close={close} text={settings.current.text} btnCancel={settings.current.btnCancel}
                 btnNo={settings.current.btnNo} btnOk={settings.current.btnOk} btnYes={settings.current.btnYes} defBtnCancel={settings.current.defBtnCancel}
                 defBtnNo={settings.current.defBtnNo} defBtnOk={settings.current.defBtnOk} defBtnYes={settings.current.defBtnYes}
                 fullscreen={settings.current.fullscreen} inputSelectRange={settings.current.inputSelectRange} inputSpellCheck={settings.current.inputSpellCheck}
-                inputText={settings.current.inputText} slide={settings.current.slide} extension={settings.current.extension}
+                inputText={settings.current.inputText} slide={settings.current.slide}
+                extension={settings.current.extension} onExtensionChanged={settings.current.onExtensionChanged}
             />
         </div>
     ) : null
