@@ -124,6 +124,7 @@ function App() {
             text: "First Dialog",
             btnOk: true
         })
+        console.log("1st Dialog closed")
         const res = await dialog.current?.show({
             text: "Second  Dialog",
             btnOk: true

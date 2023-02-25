@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react"
+import { DialogResult, Result } from "."
 import "./DialogBox.css"
 
 interface DialogBoxProps {
     hidden: boolean
     setShow: (show: boolean) => void
-    close:()=>void
+    close:(result: DialogResult)=>void
     text: string
     btnOk?: boolean
     btnCancel?: boolean
@@ -54,15 +55,10 @@ const DialogBox = ({ hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnY
             setShow(false)
     }
 
-    const onOk = () => {
-        close()
-    }
-
-    const onYes = () => close()
-
-    const onCancel = () => close()
-
-    const onNo = () => close()
+    const onOk = () => close({result: Result.Ok})
+    const onYes = () => close({result: Result.Yes})
+    const onCancel = () => close({result: Result.Cancel})
+    const onNo = () => close({result: Result.No})
 
     const selectInput = () => input.current?.select()
 
@@ -103,7 +99,7 @@ const DialogBox = ({ hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnY
         //         break
             case "Escape":
                 if (btnCancel || !btnNo) 
-                     close()
+                    close({result: Result.Cancel})
                 break            
             default:
                 return

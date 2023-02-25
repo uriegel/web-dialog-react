@@ -22,8 +22,20 @@ export interface Settings {
     extended?: ()=>JSX.Element
 }
 
+export enum Result {
+    Ok,
+    Yes,
+    No,
+    Cancel
+} 
+
+export type DialogResult = {
+    result: Result
+    input?: string
+}
+
 export type DialogHandle = {
-    show: (settings: Settings)=>Promise<boolean>
+    show: (settings: Settings)=>Promise<DialogResult>
 }
 
 const Dialog = forwardRef<DialogHandle>((_, ref) => {
@@ -33,18 +45,23 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
    
     const settings = useRef<Settings>({ text: "" })
     const dialogRef = useRef<HTMLDivElement>(null)
-    const lastActive = useRef<HTMLElement|null>(null)
+    const lastActive = useRef<HTMLElement | null>(null)
+    const resolveResult = useRef<((result: DialogResult) => void) | null>(null)
+    const dialogResult = useRef<DialogResult>({result: Result.Cancel})
 
     useImperativeHandle(ref, () => ({
-        async show(settingsValue: Settings) {
+        show(settingsValue: Settings) {
             settings.current = settingsValue
             setShow(true)
-            return false
+            return new Promise<DialogResult>(res => {
+                resolveResult.current = res
+            })
         }
     }))
 
-    const close = () => {
+    const close = (result: DialogResult) => {
         setHidden(true)
+        dialogResult.current = result
     }
 
     if (show && !lastActive.current)
@@ -55,8 +72,11 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
     }
 
     useEffect(() => {
-        if (show) 
+        if (show) {
             setHidden(false)
+        } else if (resolveResult.current) 
+            resolveResult.current(dialogResult.current)
+
     },[show])
     
     return show ? (
@@ -72,7 +92,8 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
 
 export default Dialog
 
-//TODO results, enter, input, 2 dialogs
+// TODO input result
+//TODO enter def button
 //TODO slide
 //TODO fullscreen
 //TODO extension
