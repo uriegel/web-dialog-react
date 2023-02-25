@@ -3,19 +3,25 @@
     --wdr-main-background-color: white;
     --wdr-fader-color: rgba(0, 0, 0, 0.50); 
     --wdr-animation-duration: 0.3s;
+    --wdr-buttons-gap: 5px;
+    --wdr-buttons-float: right;
     --wdr-button-margin: 20px 30px 30px 30px;
     --wdr-button-background-color: blue;
     --wdr-button-color: white;
     --wdr-button-padding: 2px 7px;
     --wdr-button-cornerradius: 3px;
+    --wdr-button-left-cornerradius: var(--wdr-button-cornerradius);
+    --wdr-button-right-cornerradius: var(--wdr-button-cornerradius);
     --wdr-button-bordercolor: transparent;
     --wdr-button-borderstyle: none;
     --wdr-button-borderwidth: 0px;    
+    --wdr-button-default-color: rgb(138, 138, 138);
     --wdr-button-hover-background-color: #7979ff;
     --wdr-button-active-background-color: #01018e;
     --wdr-button-focus-color: blue;
     --wdr-button-outlinestyle: solid;
-    --wdr-button-outlineoffset: 1px;
+    --wdr-button-outlineoffset: 1px;    
+    --wdr-input-selection-color: blue;
 }
 
 .wdr--dialogroot {
@@ -74,12 +80,12 @@
 }
 
 .wdr--buttons-container {
-    float: right;
+    float: var(--wdr-buttons-float);
 }
 
 .wdr--buttons {
     display: grid;
-    grid-column-gap: 5px;
+    grid-column-gap: var(--wdr-buttons-gap);
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
     margin: var(--wdr-button-margin);
@@ -94,7 +100,6 @@
     text-align: center;
     padding: var(--wdr-button-padding);
     transition: background-color var(--wdr-animation-duration), outline-color 400ms;
-    border-radius: var(--wdr-button-cornerradius);
     border-color: var(--wdr-button-bordercolor);
     border-style: var(--wdr-button-borderstyle);
     border-width: var(--wdr-button-borderwidth);    
@@ -107,14 +112,54 @@
     background-color: var(--wdr-button-active-background-color);
 }
 .wdr--button.default {
-    outline-color: gray;
+    outline-color: var(--wdr-button-default-color);
     outline-width: 1px;
     outline-style: var(--wdr-button-outlinestyle);
     outline-offset: var(--wdr-button-outlineoffset);
 }
+
+.wdr--buttons > div {
+    border-radius: var(--wdr-button-cornerradius);
+}
+
+.wdr--buttons :first-child {
+    border-bottom-left-radius: var(--wdr-button-left-cornerradius);
+}
+.wdr--buttons :last-child {
+    border-bottom-right-radius: var(--wdr-button-right-cornerradius);
+}
+
+.buttonFocused .wdr--button.default {
+    outline-width: 0px;
+}
+
 .wdr--button:focus {
     outline-color: var(--wdr-button-focus-color);
     outline-width: 1px;
     outline-style: var(--wdr-button-outlinestyle);
     outline-offset: var(--wdr-button-outlineoffset);
 }                         
+
+.buttonFocused .wdr--button.default.wdr--button:focus {
+    outline-width: 1px;
+}
+
+.wdr--input {
+    background-color: var(--wdr-main-background-color);
+    color: var(--wdr-main-color);
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.wdr--input:focus {
+    outline-color: var(--wdr-input-selection-color);
+    border-color: transparent;
+    outline-width: 1px;
+    outline-style: solid;
+}
+
+.wdr--input::selection {
+    color: white;
+    background-color: var(--wdr-input-selection-color);
+}       

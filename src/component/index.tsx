@@ -1,5 +1,4 @@
-import React from 'react'
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import './DialogBox.css'
 import DialogBox from './DialogBox'
 
@@ -31,10 +30,10 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
     
     const [show, setShow] = useState(false)
     const [hidden, setHidden] = useState(true)
-
+   
     const settings = useRef<Settings>({ text: "" })
-
     const dialogRef = useRef<HTMLDivElement>(null)
+    const lastActive = useRef<HTMLElement|null>(null)
 
     useImperativeHandle(ref, () => ({
         async show(settingsValue: Settings) {
@@ -48,8 +47,17 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
         setHidden(true)
     }
 
-    useEffect(() => { if (show) setHidden(false) },
-        [show])
+    if (show && !lastActive.current)
+        lastActive.current = document.activeElement as HTMLElement
+    else if (!show && lastActive.current) {
+        lastActive.current?.focus()
+        lastActive.current = null
+    }
+
+    useEffect(() => {
+        if (show) 
+            setHidden(false)
+    },[show])
     
     return show ? (
         <div ref={dialogRef} className={`wdr--dialogroot${hidden ? " hidden" : ""}`} >
@@ -64,12 +72,7 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
 
 export default Dialog
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// TODO var lastActive: HTMLElement| null = null
-
-//TODO input
-//TODO def button control, if button has focus state btnHasFocus
-//TODO Themes
-//TODO results
+//TODO results, enter, input, 2 dialogs
 //TODO slide
+//TODO fullscreen
+//TODO extension

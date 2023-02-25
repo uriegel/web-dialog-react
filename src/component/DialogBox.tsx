@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import "./DialogBox.css"
 
 interface DialogBoxProps {
@@ -24,18 +24,29 @@ interface DialogBoxProps {
     extended?: ()=>JSX.Element
 }
 
-const DialogBox = ({hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes }: DialogBoxProps) => {
+const DialogBox = ({ hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
+    inputText, inputSpellCheck, inputSelectRange }: DialogBoxProps) => {
 
     const dialog = useRef<HTMLDivElement>(null)
 
     const focusables = useRef<HTMLElement[]>([])
     const focusIndex = useRef(0)
 
+    const [textValue, setTextValue] = useState(inputText || "")
+    const [buttonFocused, setButtonFocused] = useState(false)
+
+    const input = useRef<HTMLInputElement>(null)
+
     useEffect(() => {
         if (dialog.current) {
-            focusables.current = [...dialog.current.querySelectorAll(".wdr--button")] as HTMLElement[]
-            console.log("focusables", focusables)
+            const buttons = [...dialog.current.querySelectorAll(".wdr--button")] as HTMLElement[]
+            focusables.current = input.current ? [input.current as HTMLElement].concat(buttons) : buttons
+            focusIndex.current = 0
+            focusCurrent()
+            if (inputSelectRange)
+                input.current?.setSelectionRange(inputSelectRange[0], inputSelectRange[1])
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps        
     }, [dialog])
 
     const onFaderTransitionEnd = () => {
@@ -53,23 +64,29 @@ const DialogBox = ({hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnYe
 
     const onNo = () => close()
 
+    const selectInput = () => input.current?.select()
+
+    const focusCurrent = () => {
+        const setFocus = () => {
+            if (focusIndex.current >= focusables.current.length)
+                focusIndex.current = 0
+            if (focusIndex.current < 0)
+                focusIndex.current = focusables.current.length - 1
+            const element = focusables.current[focusIndex.current]
+            if (!(element as any).disabled) {
+                element.focus()
+                return true
+            }
+            return false
+        }
+        while (!setFocus());
+    }  
+
     const onKeyDown = (evt: React.KeyboardEvent) => {
         switch (evt.code) {
             case "Tab": 
-                const setFocus = () => {
-                    focusIndex.current = evt.shiftKey ? focusIndex.current - 1 : focusIndex.current + 1
-                    if (focusIndex.current >= focusables.current.length)
-                        focusIndex.current = 0
-                    if (focusIndex.current < 0)
-                        focusIndex.current = focusables.current.length - 1
-                    const element = focusables.current[focusIndex.current]
-                    if (!(element as any).disabled) {
-                        element.focus()
-                        return true
-                    }
-                    return false
-                }
-                while (!setFocus());
+                focusIndex.current = evt.shiftKey ? focusIndex.current - 1 : focusIndex.current + 1
+                focusCurrent()
                 break
         //     case "Enter": 
         //         //if (this.defBtn && !this.buttonHasFocus) {
@@ -95,40 +112,58 @@ const DialogBox = ({hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnYe
         evt.stopPropagation()            
     }
 
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setTextValue(e.target.value)
+
+    const onFocus = (evt: React.FocusEvent) => {
+        focusIndex.current = focusables.current.findIndex(n => n == document.activeElement)
+        if (focusIndex.current == -1)
+            focusIndex.current = 0
+        setButtonFocused(focusables.current[focusIndex.current].classList.contains("wdr--button"))
+    }
+
     return (
         <>
             <div className='wdr--fader' onTransitionEnd={onFaderTransitionEnd}></div>
             <div className='wdr--container' onKeyDown={onKeyDown}>
-                <div ref={dialog} className='wdr--dialog'>
+                <div ref={dialog} className='wdr--dialog' onFocus={onFocus}>
                     <div className='wdr--content'>
                         <p>{text}</p>
+                        { inputText != undefined
+                            ? (<input type={"text"} ref={input} className='wdr--input' spellCheck={inputSpellCheck == true} value={textValue} onChange={onInputChange}
+                                onFocus={selectInput}></input>)
+                            : null
+                        }
                     </div>
                     <div className='wdr--buttons-container'>
-                        <div className='wdr--buttons'>
-                            {btnOk ? (
+                        <div className={`wdr--buttons${buttonFocused ? " buttonFocused" : ""}`}>
+                            { btnOk ? (
                                 <div className={`wdr--button${defBtnOk ? " default" : ""}`}
                                         tabIndex={1} onClick={onOk}>
                                     OK
                                 </div>)
-                                : (<></>)}
-                            {btnYes ? (
+                                : null
+                            }
+                            { btnYes ? (
                                 <div className={`wdr--button${defBtnYes ? " default" : ""}`}
-                                    tabIndex={1} onClick={onYes}>
+                                    tabIndex={1} onClick={onYes}>   
                                     Ja
                                 </div>)
-                                : (<></>)}
-                            {btnCancel ? (
-                                <div className={`wdr--button${defBtnCancel ? " default" : ""}`}
-                                        tabIndex={2} onClick={onCancel}>
-                                    Abbrechen
-                                </div>)
-                                : (<></>)}
-                            {btnNo ? (
+                                : null
+                            }
+                            { btnNo ? (
                                 <div className={`wdr--button${defBtnNo ? " default" : ""}`}
-                                        tabIndex={3} onClick={onNo}>
+                                        tabIndex={2} onClick={onNo}>
                                     Nein
                                 </div>)
-                                : (<></>)}
+                                : null
+                            }
+                            { btnCancel ? (
+                                <div className={`wdr--button${defBtnCancel ? " default" : ""}`}
+                                        tabIndex={3} onClick={onCancel}>
+                                    Abbrechen
+                                </div>)
+                                : null
+                            }
                         </div>
                     </div>
                 </div>
