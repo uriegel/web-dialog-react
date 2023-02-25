@@ -135,7 +135,8 @@ function App() {
         const [option3, setOption3] = useState(false)
 
         useEffect(() => {
-            onChange({option1, option2, option3})
+            if (onChange)
+                onChange({option1, option2, option3})
         })
 
         return (
@@ -278,4 +279,3 @@ function App() {
 export default App
 
 //TODO  Settings<T> extend from Settings
-//TODO  extension no changed function
