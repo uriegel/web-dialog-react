@@ -5,7 +5,8 @@ import "./DialogBox.css"
 interface DialogBoxProps {
     hidden: boolean
     setShow: (show: boolean) => void
-    close:(result: DialogResult)=>void
+    setResult: (result: DialogResult) => void
+    close:()=>void
     text: string
     btnOk?: boolean
     btnCancel?: boolean
@@ -25,13 +26,14 @@ interface DialogBoxProps {
     extended?: ()=>JSX.Element
 }
 
-const DialogBox = ({ hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
+const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
     inputText, inputSpellCheck, inputSelectRange }: DialogBoxProps) => {
 
     const dialog = useRef<HTMLDivElement>(null)
 
     const focusables = useRef<HTMLElement[]>([])
     const focusIndex = useRef(0)
+    const dialogResult = useRef<DialogResult>({result: Result.Cancel})
 
     const [textValue, setTextValue] = useState(inputText || "")
     const [buttonFocused, setButtonFocused] = useState(false)
@@ -51,14 +53,28 @@ const DialogBox = ({ hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnY
     }, [dialog])
 
     const onFaderTransitionEnd = () => {
-        if (hidden)
+        if (hidden) {
             setShow(false)
+            setTimeout(() => setResult(dialogResult.current))
+        }
     }
 
-    const onOk = () => close({result: Result.Ok})
-    const onYes = () => close({result: Result.Yes})
-    const onCancel = () => close({result: Result.Cancel})
-    const onNo = () => close({result: Result.No})
+    const onOk = () => {
+        dialogResult.current = { result: Result.Ok }
+        close()
+    }
+    const onYes = () => {
+        dialogResult.current = { result: Result.Yes }
+        close()
+    }
+    const onCancel = () =>{
+        dialogResult.current = { result: Result.Cancel }
+        close()
+    }
+    const onNo = () => {
+        dialogResult.current = { result: Result.No }
+        close()
+    }
 
     const selectInput = () => input.current?.select()
 
@@ -99,7 +115,7 @@ const DialogBox = ({ hidden, setShow, close, text, btnOk, btnCancel, btnNo, btnY
         //         break
             case "Escape":
                 if (btnCancel || !btnNo) 
-                    close({result: Result.Cancel})
+                    onCancel()
                 break            
             default:
                 return

@@ -44,10 +44,8 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
     const [hidden, setHidden] = useState(true)
    
     const settings = useRef<Settings>({ text: "" })
-    const dialogRef = useRef<HTMLDivElement>(null)
     const lastActive = useRef<HTMLElement | null>(null)
     const resolveResult = useRef<((result: DialogResult) => void) | null>(null)
-    const dialogResult = useRef<DialogResult>({result: Result.Cancel})
 
     useImperativeHandle(ref, () => ({
         show(settingsValue: Settings) {
@@ -59,10 +57,7 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
         }
     }))
 
-    const close = (result: DialogResult) => {
-        setHidden(true)
-        dialogResult.current = result
-    }
+    const close = () => setHidden(true)
 
     if (show && !lastActive.current)
         lastActive.current = document.activeElement as HTMLElement
@@ -72,16 +67,20 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
     }
 
     useEffect(() => {
-        if (show) {
+        if (show) 
             setHidden(false)
-        } else if (resolveResult.current) 
-            resolveResult.current(dialogResult.current)
-
-    },[show])
+    }, [show])
+    
+    const setResult = (result: DialogResult) => {
+        if (resolveResult.current) {
+            resolveResult.current(result)
+            resolveResult.current = null
+        }
+    }
     
     return show ? (
-        <div ref={dialogRef} className={`wdr--dialogroot${hidden ? " hidden" : ""}`} >
-            <DialogBox hidden={hidden} setShow={setShow} close={close} text={settings.current.text} btnCancel={settings.current.btnCancel} btnNo={settings.current.btnNo} btnOk={settings.current.btnOk}
+        <div className={`wdr--dialogroot${hidden ? " hidden" : ""}`} >
+            <DialogBox hidden={hidden} setShow={setShow} setResult={setResult} close={close} text={settings.current.text} btnCancel={settings.current.btnCancel} btnNo={settings.current.btnNo} btnOk={settings.current.btnOk}
                 btnYes={settings.current.btnYes} defBtnCancel={settings.current.defBtnCancel} defBtnNo={settings.current.defBtnNo} defBtnOk={settings.current.defBtnOk}
                 defBtnYes={settings.current.defBtnYes} fullscreen={settings.current.fullscreen} inputSelectRange={settings.current.inputSelectRange} 
                 inputSpellCheck={settings.current.inputSpellCheck} inputText={settings.current.inputText} slide={settings.current.slide} slideReverse={settings.current.slideReverse}
