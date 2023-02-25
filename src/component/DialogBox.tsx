@@ -43,7 +43,9 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
     useEffect(() => {
         if (dialog.current) {
             const buttons = [...dialog.current.querySelectorAll(".wdr--button")] as HTMLElement[]
-            focusables.current = input.current ? [input.current as HTMLElement].concat(buttons) : buttons
+            const extendedFocusables = extension ? [...dialog.current.querySelectorAll(".wdr-focusable")] as HTMLElement[] : []
+            const inputs = input.current ? [input.current as HTMLElement] : []
+            focusables.current = inputs.concat(extendedFocusables).concat(buttons)
             focusIndex.current = 0
             setSlideControl(Slide.None)
             focusCurrent()
@@ -84,7 +86,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
 
     const selectInput = () => input.current?.select()
 
-    const focusCurrent = () => {
+    const focusCurrent = (reverse?: boolean) => {
         const setFocus = () => {
             if (focusIndex.current >= focusables.current.length)
                 focusIndex.current = 0
@@ -95,6 +97,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
                 element.focus()
                 return true
             }
+            focusIndex.current = reverse ? focusIndex.current - 1 : focusIndex.current + 1
             return false
         }
         while (!setFocus());
@@ -104,7 +107,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
         switch (evt.code) {
             case "Tab": 
                 focusIndex.current = evt.shiftKey ? focusIndex.current - 1 : focusIndex.current + 1
-                focusCurrent()
+                focusCurrent(evt.shiftKey)
                 break
             case "Enter": 
                 if (!buttonFocused) {

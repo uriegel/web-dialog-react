@@ -141,19 +141,19 @@ function App() {
         return (
             <>
                 <div>
-                    <input type="checkbox" onChange={e => setOption1(e.currentTarget.checked)} className="wdb-focusable" name="chkbx1" checked={option1} />
+                    <input type="checkbox" onChange={e => setOption1(e.currentTarget.checked)} className="wdr-focusable" name="chkbx1" checked={option1} />
                     <label htmlFor="chkbx1">First option</label>
                 </div>
                 <div>
-                    <input type="checkbox" onChange={e => setOption2(e.currentTarget.checked)} className="wdb-focusable" name="chkbx2" checked={option2} />
+                    <input type="checkbox" onChange={e => setOption2(e.currentTarget.checked)} className="wdr-focusable" name="chkbx2" checked={option2} />
                     <label htmlFor="chkbx2">2nd option</label>
                 </div>
                 <div>
-                    <input type="checkbox" className="wdb-focusable" disabled name="chkbx3" />
+                    <input type="checkbox" className="wdr-focusable" disabled name="chkbx3" />
                     <label htmlFor="chkbx3">2nd option</label>
                 </div>
                 <div>
-                    <input type="checkbox" onChange={e => setOption3(e.currentTarget.checked)} className="wdb-focusable" name="chkbx4" checked={option3} />
+                    <input type="checkbox" onChange={e => setOption3(e.currentTarget.checked)} className="wdr-focusable" name="chkbx4" checked={option3} />
                     <label htmlFor="chkbx3">2nd option</label>
                 </div>
             </>
@@ -277,5 +277,5 @@ function App() {
 
 export default App
 
-// extension no changed function
-// extension tab extension controls
+//TODO  Settings<T> extend from Settings
+//TODO  extension no changed function
