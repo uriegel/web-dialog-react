@@ -27,7 +27,6 @@ export interface Settings {
     inputSelectRange?: number[]
     inputSpellCheck?: boolean
     fullscreen?: boolean
-    dontUseApp?: boolean
     extension?: (props: ExtensionProps) => JSX.Element
     onExtensionChanged?: (t: any)=>void
 }
