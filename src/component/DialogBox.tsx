@@ -156,7 +156,11 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
                                 onFocus={selectInput}></input>)
                             : null
                         }
-                        {extension && onExtensionChanged ? extension({ onChange: onExtensionChanged }) : null }
+                        {
+                            extension 
+                            ? extension({ onChange: onExtensionChanged })
+                            :null
+                        }
                     </div>
                     <div>
                         <div className={`wdr--buttons${buttonFocused ? " buttonFocused" : ""}`}>

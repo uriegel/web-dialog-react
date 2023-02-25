@@ -9,7 +9,7 @@ export enum Slide {
 }
 
 export interface ExtensionProps {
-    onChange: (t: any)=>void
+    onChange?: (t: any)=>void
 }
 
 export interface Settings {
