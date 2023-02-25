@@ -278,4 +278,7 @@ function App() {
 
 export default App
 
+//TODO No adwaita style
+//TODO Set focus to early (Menu hide focuses app)
+//TODO slide runs to the wrong side when OK
 

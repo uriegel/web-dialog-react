@@ -58,7 +58,6 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
     const onFaderTransitionEnd = () => {
         if (hidden) {
             setShow(false)
-            console.log("Guten Abend")
             setTimeout(() => setResult(dialogResult.current))
         }
     }
