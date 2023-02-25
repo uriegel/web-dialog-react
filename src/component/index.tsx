@@ -9,7 +9,8 @@ export enum Slide {
 }
 
 export interface ExtensionProps {
-    onChange?: (t: any)=>void
+    onChange?: (t: any) => void
+    props?: any
 }
 
 export interface Settings {
@@ -28,7 +29,8 @@ export interface Settings {
     inputSpellCheck?: boolean
     fullscreen?: boolean
     extension?: (props: ExtensionProps) => JSX.Element
-    onExtensionChanged?: (t: any)=>void
+    onExtensionChanged?: (t: any) => void
+    extensionProps?: any
 }
 
 export enum Result {
@@ -94,7 +96,7 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
                 defBtnNo={settings.current.defBtnNo} defBtnOk={settings.current.defBtnOk} defBtnYes={settings.current.defBtnYes}
                 fullscreen={settings.current.fullscreen} inputSelectRange={settings.current.inputSelectRange} inputSpellCheck={settings.current.inputSpellCheck}
                 inputText={settings.current.inputText} slide={settings.current.slide}
-                extension={settings.current.extension} onExtensionChanged={settings.current.onExtensionChanged}
+                extension={settings.current.extension} onExtensionChanged={settings.current.onExtensionChanged} extensionProps={settings.current.extensionProps}
             />
         </div>
     ) : null

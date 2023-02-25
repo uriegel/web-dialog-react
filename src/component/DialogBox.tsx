@@ -22,11 +22,12 @@ interface DialogBoxProps {
     inputSpellCheck?: boolean
     fullscreen?: boolean
     extension?: (props: ExtensionProps) => JSX.Element
-    onExtensionChanged?: (t: any)=>void
+    onExtensionChanged?: (t: any) => void
+    extensionProps?: any
 }
 
 const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
-    inputText, inputSpellCheck, inputSelectRange, slide, fullscreen, extension, onExtensionChanged }: DialogBoxProps) => {
+    inputText, inputSpellCheck, inputSelectRange, slide, fullscreen, extension, onExtensionChanged, extensionProps }: DialogBoxProps) => {
 
     const dialog = useRef<HTMLDivElement>(null)
 
@@ -166,7 +167,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
                         }
                         {
                             extension 
-                            ? extension({ onChange: onExtensionChanged })
+                            ? extension({ onChange: onExtensionChanged, props: extensionProps })
                             :null
                         }
                     </div>
