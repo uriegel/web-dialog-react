@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { DialogResult, Result } from "."
+import { DialogResult, Result, Slide } from "."
 import "./DialogBox.css"
 
 interface DialogBoxProps {
@@ -16,8 +16,7 @@ interface DialogBoxProps {
     defBtnYes?: boolean;
     defBtnNo?: boolean;
     defBtnCancel?: boolean;
-    slide?: boolean
-    slideReverse?: boolean
+    slide?: Slide
     inputText?: string
     inputSelectRange?: number[]
     inputSpellCheck?: boolean
@@ -26,7 +25,7 @@ interface DialogBoxProps {
 }
 
 const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
-    inputText, inputSpellCheck, inputSelectRange }: DialogBoxProps) => {
+    inputText, inputSpellCheck, inputSelectRange, slide }: DialogBoxProps) => {
 
     const dialog = useRef<HTMLDivElement>(null)
 
@@ -36,6 +35,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
 
     const [textValue, setTextValue] = useState(inputText || "")
     const [buttonFocused, setButtonFocused] = useState(false)
+    const [slideControl, setSlideControl] = useState(slide)
 
     const input = useRef<HTMLInputElement>(null)
 
@@ -44,6 +44,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
             const buttons = [...dialog.current.querySelectorAll(".wdr--button")] as HTMLElement[]
             focusables.current = input.current ? [input.current as HTMLElement].concat(buttons) : buttons
             focusIndex.current = 0
+            setSlideControl(Slide.None)
             focusCurrent()
             if (inputSelectRange)
                 input.current?.setSelectionRange(inputSelectRange[0], inputSelectRange[1])
@@ -60,18 +61,22 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
 
     const onOk = () => {
         dialogResult.current = { result: Result.Ok, input: textValue }
+        setSlideControl(slide)
         close()
     }
     const onYes = () => {
         dialogResult.current = { result: Result.Yes, input: textValue }
+        setSlideControl(slide)
         close()
     }
     const onCancel = () =>{
         dialogResult.current = { result: Result.Cancel }
+        setSlideControl(slide)
         close()
     }
     const onNo = () => {
         dialogResult.current = { result: Result.No }
+        setSlideControl(slide)
         close()
     }
 
@@ -130,7 +135,14 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
     return (
         <>
             <div className='wdr--fader' onTransitionEnd={onFaderTransitionEnd}></div>
-            <div className='wdr--container' onKeyDown={onKeyDown}>
+            <div className={`wdr--container${
+                    slideControl == Slide.Left
+                    ? " leftTranslated"
+                    : slideControl == Slide.Right
+                    ? " rightTranslated"
+                    : ""
+                }`}
+                onKeyDown={onKeyDown}>
                 <div ref={dialog} className='wdr--dialog' onFocus={onFocus}>
                     <div className='wdr--content'>
                         <p>{text}</p>

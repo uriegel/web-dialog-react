@@ -57,6 +57,13 @@
     transition: transform var(--wdr-animation-duration);
 }
 
+.wdr--container.leftTranslated {
+    transform: translateX(-50%);
+}
+.wdr--container.rightTranslated {
+    transform: translateX(50%);
+}
+
 .wdr--dialog {
     margin: 30px;
     border-radius: 5px;

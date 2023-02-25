@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef, useState } from 'react'
 import './App.css'
-import Dialog, { DialogHandle } from './component' 
+import Dialog, { DialogHandle, Slide } from './component' 
 
 const themes = [
     { name: "Blue", theme: "themeBlue" },
@@ -39,8 +39,8 @@ function App() {
 
     const showSlideDialog = async () => {
         const res = await dialog.current?.show({
-            text: "Slide",
-            slide: true,
+            text: "Slide from left",
+            slide: Slide.Left,
             btnOk: true,
             btnCancel: true
         })
@@ -49,8 +49,8 @@ function App() {
 
     const showSlideReverseDialog = async () => {
         const res = await dialog.current?.show({
-            text: "Slide reverse",
-            slideReverse: true,
+            text: "Slide from right",
+            slide: Slide.Right,
             btnOk: true,
             btnCancel: true
         })

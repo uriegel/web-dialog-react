@@ -2,6 +2,12 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } f
 import './DialogBox.css'
 import DialogBox from './DialogBox'
 
+export enum Slide {
+    None,
+    Left,
+    Right
+}
+
 export interface Settings {
     text: string
     btnOk?: boolean
@@ -12,8 +18,7 @@ export interface Settings {
     defBtnYes?: boolean;
     defBtnNo?: boolean;
     defBtnCancel?: boolean;
-    slide?: boolean
-    slideReverse?: boolean
+    slide?: Slide
     inputText?: string
     inputSelectRange?: number[]
     inputSpellCheck?: boolean
@@ -83,7 +88,7 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
             <DialogBox hidden={hidden} setShow={setShow} setResult={setResult} close={close} text={settings.current.text} btnCancel={settings.current.btnCancel} btnNo={settings.current.btnNo} btnOk={settings.current.btnOk}
                 btnYes={settings.current.btnYes} defBtnCancel={settings.current.defBtnCancel} defBtnNo={settings.current.defBtnNo} defBtnOk={settings.current.defBtnOk}
                 defBtnYes={settings.current.defBtnYes} fullscreen={settings.current.fullscreen} inputSelectRange={settings.current.inputSelectRange} 
-                inputSpellCheck={settings.current.inputSpellCheck} inputText={settings.current.inputText} slide={settings.current.slide} slideReverse={settings.current.slideReverse}
+                inputSpellCheck={settings.current.inputSpellCheck} inputText={settings.current.inputText} slide={settings.current.slide} 
             />
         </div>
     ) : null
