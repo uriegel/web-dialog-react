@@ -25,7 +25,7 @@ interface DialogBoxProps {
 }
 
 const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
-    inputText, inputSpellCheck, inputSelectRange, slide }: DialogBoxProps) => {
+    inputText, inputSpellCheck, inputSelectRange, slide, fullscreen }: DialogBoxProps) => {
 
     const dialog = useRef<HTMLDivElement>(null)
 
@@ -143,7 +143,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
                     : ""
                 }`}
                 onKeyDown={onKeyDown}>
-                <div ref={dialog} className='wdr--dialog' onFocus={onFocus}>
+                <div ref={dialog} className={`wdr--dialog${fullscreen ? " fullscreen" : ""}`} onFocus={onFocus}>
                     <div className='wdr--content'>
                         <p>{text}</p>
                         { inputText != undefined
@@ -152,7 +152,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
                             : null
                         }
                     </div>
-                    <div className='wdr--buttons-container'>
+                    <div>
                         <div className={`wdr--buttons${buttonFocused ? " buttonFocused" : ""}`}>
                             { btnOk ? (
                                 <div className={`wdr--button${defBtnOk ? " default" : ""}`}

@@ -65,6 +65,8 @@
 }
 
 .wdr--dialog {
+    display: flex;
+    flex-direction: column;
     margin: 30px;
     border-radius: 5px;
     color: var(--wdr-main-color);
@@ -72,6 +74,11 @@
     z-index: 10;
     box-shadow: 5px 4px 8px 2px rgb(0 0 0 / 35%), 0px 0px 20px 2px rgb(0 0 0 / 25%);
     transition: opacity var(--wdr-animation-duration);
+}
+
+.wdr--dialog.fullscreen{
+    width: 100%;
+    height: 90%;
 }
 
 .hidden .wdr--dialog {
@@ -86,16 +93,13 @@
     padding: 30px 30px 0px 30px;
 }
 
-.wdr--buttons-container {
-    float: var(--wdr-buttons-float);
-}
-
 .wdr--buttons {
     display: grid;
     grid-column-gap: var(--wdr-buttons-gap);
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
     margin: var(--wdr-button-margin);
+    float: var(--wdr-buttons-float);
 }
 
 .wdr--button {
