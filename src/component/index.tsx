@@ -91,8 +91,6 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
 
 export default Dialog
 
-// TODO input result
-//TODO enter def button
 //TODO slide
 //TODO fullscreen
 //TODO extension

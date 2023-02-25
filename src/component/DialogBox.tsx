@@ -22,7 +22,6 @@ interface DialogBoxProps {
     inputSelectRange?: number[]
     inputSpellCheck?: boolean
     fullscreen?: boolean
-    dontUseApp?: boolean
     extended?: ()=>JSX.Element
 }
 
@@ -60,11 +59,11 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
     }
 
     const onOk = () => {
-        dialogResult.current = { result: Result.Ok }
+        dialogResult.current = { result: Result.Ok, input: textValue }
         close()
     }
     const onYes = () => {
-        dialogResult.current = { result: Result.Yes }
+        dialogResult.current = { result: Result.Yes, input: textValue }
         close()
     }
     const onCancel = () =>{
@@ -100,19 +99,14 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
                 focusIndex.current = evt.shiftKey ? focusIndex.current - 1 : focusIndex.current + 1
                 focusCurrent()
                 break
-        //     case "Enter": 
-        //         //if (this.defBtn && !this.buttonHasFocus) {
-        //         //     const result = 
-        //         //         this.defBtn == this.btnOk
-        //         //         ? Result.Ok
-        //         //         : this.defBtn == this.btnYes
-        //         //         ? Result.Yes
-        //         //         : this.defBtn == this.btnNo
-        //         //         ? Result.No
-        //         //         : Result.Cancel
-        //         //     this.closeDialog(result)
-        //         //}
-        //         break
+            case "Enter": 
+                if (!buttonFocused) {
+                    const element = focusables.current.find(n => n.classList.contains("default"))
+                    if (element)
+                        element.click()
+                } else
+                    focusables.current[focusIndex.current].click()
+                break
             case "Escape":
                 if (btnCancel || !btnNo) 
                     onCancel()
@@ -126,7 +120,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setTextValue(e.target.value)
 
-    const onFocus = (evt: React.FocusEvent) => {
+    const onFocus = () => {
         focusIndex.current = focusables.current.findIndex(n => n == document.activeElement)
         if (focusIndex.current == -1)
             focusIndex.current = 0
