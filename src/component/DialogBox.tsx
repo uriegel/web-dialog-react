@@ -89,7 +89,7 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
     }
     const onNo = () => {
         dialogResult.current = { result: Result.No }
-        slideEnd(false)
+        slideEnd(btnCancel ?? false)
         close()
     }
 
