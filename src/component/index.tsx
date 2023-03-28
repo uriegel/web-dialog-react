@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import './DialogBox.css'
-import DialogBox from './DialogBox'
+import DialogBox, { DialogBoxHandle } from './DialogBox'
 
 export enum Slide {
     None,
@@ -47,6 +47,7 @@ export type DialogResult = {
 
 export type DialogHandle = {
     show: (settings: Settings)=>Promise<DialogResult>
+    close: ()=>void
 }
 
 const Dialog = forwardRef<DialogHandle>((_, ref) => {
@@ -58,6 +59,8 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
     const lastActive = useRef<HTMLElement | null>(null)
     const resolveResult = useRef<((result: DialogResult) => void) | null>(null)
 
+    const dialogBox = useRef<DialogBoxHandle>(null)
+
     useImperativeHandle(ref, () => ({
         show(settingsValue: Settings) {
             settings.current = settingsValue
@@ -65,6 +68,9 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
             return new Promise<DialogResult>(res => {
                 resolveResult.current = res
             })
+        },
+        close() {
+            dialogBox.current?.close()
         }
     }))
 
@@ -91,7 +97,7 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
 
     return show ? (
         <div className={`wdr--dialogroot${hidden ? " hidden" : ""}`} >
-            <DialogBox hidden={hidden} setShow={setShow} setResult={setResult} close={close} text={settings.current.text} btnCancel={settings.current.btnCancel}
+            <DialogBox ref={dialogBox} hidden={hidden} setShow={setShow} setResult={setResult} close={close} text={settings.current.text} btnCancel={settings.current.btnCancel}
                 btnNo={settings.current.btnNo} btnOk={settings.current.btnOk} btnYes={settings.current.btnYes} defBtnCancel={settings.current.defBtnCancel}
                 defBtnNo={settings.current.defBtnNo} defBtnOk={settings.current.defBtnOk} defBtnYes={settings.current.defBtnYes}
                 fullscreen={settings.current.fullscreen} inputSelectRange={settings.current.inputSelectRange} inputSpellCheck={settings.current.inputSpellCheck}

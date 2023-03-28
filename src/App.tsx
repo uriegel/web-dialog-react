@@ -13,7 +13,7 @@ function App() {
     const dialog = useRef<DialogHandle>(null)
     
     const [theme, setTheme] = useState(themes[0])
-
+    
     const onThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const theme = themes.find(n => n.name == e.target.value)!
         setTheme(theme)
@@ -23,6 +23,16 @@ function App() {
         const res = await dialog.current?.show({
             text: "Standard",
             btnOk: true,
+            btnCancel: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const autoShowDialog = async () => {
+        setTimeout(() => dialog.current?.close(), 4000)
+        const res = await dialog.current?.show({
+            text: "Dialog automatically closes in 4 s",
+            slide: Slide.Left,
             btnCancel: true
         })
         console.log("Dialog closed", res)
@@ -226,6 +236,7 @@ function App() {
                 <button onClick={showYesNoDialog}>Ja Nein</button>
                 <button onClick={showFullScreenDialog}>Fullscreen</button>
                 <button onClick={show2Dialogs}>2 Dialogs</button>
+                <button onClick={autoShowDialog}>Auto show Dialog</button> 
             </p>
             <p>
 

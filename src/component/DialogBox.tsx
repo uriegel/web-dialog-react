@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 import { DialogResult, ExtensionProps, Result, Slide } from "."
 import "./DialogBox.css"
 
@@ -26,8 +26,12 @@ interface DialogBoxProps {
     extensionProps?: any
 }
 
-const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
-    inputText, inputSpellCheck, inputSelectRange, slide, fullscreen, extension, onExtensionChanged, extensionProps }: DialogBoxProps) => {
+export type DialogBoxHandle = {
+    close: ()=>void
+}
+
+const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
+    inputText, inputSpellCheck, inputSelectRange, slide, fullscreen, extension, onExtensionChanged, extensionProps}, ref) => {
 
     const dialog = useRef<HTMLDivElement>(null)
 
@@ -40,6 +44,12 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
     const [slideControl, setSlideControl] = useState(slide)
 
     const input = useRef<HTMLInputElement>(null)
+
+    useImperativeHandle(ref, () => ({
+        close() {
+            onOk()
+        }
+    }))
 
     useEffect(() => {
         if (dialog.current) {
@@ -207,6 +217,6 @@ const DialogBox = ({ hidden, setShow, setResult, close, text, btnOk, btnCancel, 
             </div>
         </>
     )
-}
+})
 
 export default DialogBox
