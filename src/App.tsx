@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './App.css'
-import Dialog, { DialogHandle, ExtensionProps, Slide } from './component' 
+import Dialog, { DialogHandle, ExtensionProps, Result, Slide } from './component' 
 
 const themes = [
     { name: "Blue", theme: "themeBlue" },
@@ -36,6 +36,27 @@ function App() {
             btnCancel: true
         })
         console.log("Dialog closed", res)
+    }
+
+    const complexShowDialog = async () => {
+        await dialog.current?.show({
+            text: "Start next dialog",
+            slide: Slide.Left,
+            btnOk: true
+        })
+
+        setTimeout(() => dialog.current?.close(), 5000)
+        const res = await dialog.current?.show({
+            text: "Dialog automatically closes in 5 s",
+            slide: Slide.Left,
+            btnCancel: true
+        })
+        if (res?.result == Result.Cancel)
+            await dialog.current?.show({
+                text: "Action cancelling...",
+                slide: Slide.Left,
+                btnCancel: true
+            })
     }
 
     const showSlideDialog = async () => {
@@ -236,7 +257,8 @@ function App() {
                 <button onClick={showYesNoDialog}>Ja Nein</button>
                 <button onClick={showFullScreenDialog}>Fullscreen</button>
                 <button onClick={show2Dialogs}>2 Dialogs</button>
-                <button onClick={autoShowDialog}>Auto show Dialog</button> 
+                <button onClick={autoShowDialog}>Auto Dialog</button> 
+                <button onClick={complexShowDialog}>Complex Dialog</button> 
             </p>
             <p>
 
