@@ -83,12 +83,12 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
             : Slide.None)
 
     const onOk = () => {
-        dialogResult.current = { result: Result.Ok, input: textValue }
+        dialogResult.current = { result: Result.Ok, input: textValue, props: extensionProps }
         slideEnd(true)
         close()
     }
     const onYes = () => {
-        dialogResult.current = { result: Result.Yes, input: textValue }
+        dialogResult.current = { result: Result.Yes, input: textValue, props: extensionProps }
         slideEnd(true)
         close()
     }

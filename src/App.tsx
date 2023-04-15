@@ -192,6 +192,39 @@ function App() {
         )
     }
 
+    interface ExtendedContentResProps {
+        text: string
+        active: boolean
+    }
+
+    const ExtendedContentRes = ({props }: ExtensionProps) => {
+        
+        const [text, setText] = useState(props.text)
+        const [active, setActive] = useState(props.active)
+
+        const onText = (val: string) => {
+            setText(val)
+            props.text = val
+        }
+
+        const setOption = (val: boolean) => {
+            setActive(val)
+            props.active = val
+        }
+
+        return (
+            <>
+                <div>
+                    <input type="text" onChange={e => onText(e.target.value)} className="wdr-focusable" value={text} />
+                </div>
+                <div>
+                    <input type="checkbox" onChange={e => setOption(e.currentTarget.checked)} className="wdr-focusable" name="chkbx2" checked={active} />
+                    <label htmlFor="chkbx2">option</label>
+                </div>
+            </>
+        )
+    }
+
     const showExtendedDialog = async () => {
 
         const res = await dialog.current?.show({
@@ -206,6 +239,20 @@ function App() {
         })
         console.log("Dialog closed", res)
     }
+
+    const showExtendedDialogRes = async () => {
+
+        const res = await dialog.current?.show({
+            text: "Standard extended",
+            btnOk: true,
+            btnCancel: true,
+            defBtnCancel: true,
+            extension: ExtendedContentRes,
+            extensionProps: { text: "The text", active: false }
+        })
+        console.log("Dialog closed", res)
+    }
+    
 
     const showExtendedInputDialog = async () => {
 
@@ -246,6 +293,7 @@ function App() {
             <p>
                 <button onClick={showStandardDialog}>Show Dialog</button> 
                 <button onClick={showExtendedDialog}>Show Dialog Extended</button> 
+                <button onClick={showExtendedDialogRes}>Show Dialog Extended with Result</button> 
                 <button onClick={showExtendedInputDialog}>Show Dialog Input Extended</button> 
                 <button onClick={showExtendedNoControlsDialog}>Show Dialog Extended no Controls</button> 
                 <button onClick={showSlideDialog}>Slide Left</button> 

@@ -43,6 +43,7 @@ export enum Result {
 export type DialogResult = {
     result: Result
     input?: string
+    props?: any
 }
 
 export type DialogHandle = {
