@@ -23,7 +23,8 @@ function App() {
         const res = await dialog.current?.show({
             text: "Standard",
             btnOk: true,
-            btnCancel: true
+            btnCancel: true,
+            defBtnCancel: true
         })
         console.log("Dialog closed", res)
     }

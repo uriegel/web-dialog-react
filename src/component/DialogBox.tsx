@@ -57,9 +57,11 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
             const extendedFocusables = extension ? [...dialog.current.querySelectorAll(".wdr-focusable")] as HTMLElement[] : []
             const inputs = input.current ? [input.current as HTMLElement] : []
             focusables.current = inputs.concat(extendedFocusables).concat(buttons)
-            focusIndex.current = 0
+            focusIndex.current = extendedFocusables.length == 0 && inputs.length == 0
+                ? buttons.findIndex(n => n.className.includes("default"))
+                : 0
+            focusIndex.current = focusIndex.current != -1 ? focusIndex.current : 0
             setSlideControl(Slide.None)
-            //setTimeout(focusCurrent)
             focusCurrent()
             if (inputSelectRange)
                 input.current?.setSelectionRange(inputSelectRange[0], inputSelectRange[1])
