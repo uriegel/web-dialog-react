@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './App.css'
-import Dialog, { DialogHandle, ExtensionProps, Result, Slide } from './component' 
+import Dialog, { DialogHandle, ExtensionProps, ResultType, Slide } from './component' 
+import { Err, Ok } from 'functional-extensions'
 
 const themes = [
     { name: "Blue", theme: "themeBlue" },
@@ -52,7 +53,7 @@ function App() {
             slide: Slide.Left,
             btnCancel: true
         })
-        if (res?.result == Result.Cancel)
+        if (res?.result == ResultType.Cancel)
             await dialog.current?.show({
                 text: "Action cancelling...",
                 slide: Slide.Left,
@@ -91,14 +92,19 @@ function App() {
     }
 
     const showTextInputDialog = async () => {
-        const res = await dialog.current?.show({
+        const res = dialog.current?.showDialog<string, boolean>({
             text: "Text input:",
             inputText: "The text input",
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true
-        })
-        console.log("Dialog closed", res)
+        }, res => res.result == ResultType.Ok && res.input
+            ? new Ok(res.input)
+            : new Err(false))
+        const rest = await res?.toResult()
+        rest?.match(
+            val => console.log("Chosen", val),
+            _ => console.log("cancelled"))
     }
 
     const showRenameDialog = async () => {
@@ -191,11 +197,6 @@ function App() {
                 </div>
             </>
         )
-    }
-
-    interface ExtendedContentResProps {
-        text: string
-        active: boolean
     }
 
     const ExtendedContentRes = ({props }: ExtensionProps) => {

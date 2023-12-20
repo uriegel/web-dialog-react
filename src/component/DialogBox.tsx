@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
-import { DialogResult, ExtensionProps, Result, Slide } from "."
+import { DialogResult, ExtensionProps, ResultType, Slide } from "."
 import "./DialogBox.css"
 
 interface DialogBoxProps {
@@ -37,7 +37,7 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
 
     const focusables = useRef<HTMLElement[]>([])
     const focusIndex = useRef(0)
-    const dialogResult = useRef<DialogResult>({result: Result.Cancel})
+    const dialogResult = useRef<DialogResult>({result: ResultType.Cancel})
 
     const [textValue, setTextValue] = useState(inputText || "")
     const [buttonFocused, setButtonFocused] = useState(false)
@@ -85,22 +85,22 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
             : Slide.None)
 
     const onOk = () => {
-        dialogResult.current = { result: Result.Ok, input: textValue, props: extensionProps }
+        dialogResult.current = { result: ResultType.Ok, input: textValue, props: extensionProps }
         slideEnd(true)
         close()
     }
     const onYes = () => {
-        dialogResult.current = { result: Result.Yes, input: textValue, props: extensionProps }
+        dialogResult.current = { result: ResultType.Yes, input: textValue, props: extensionProps }
         slideEnd(true)
         close()
     }
     const onCancel = () =>{
-        dialogResult.current = { result: Result.Cancel }
+        dialogResult.current = { result: ResultType.Cancel }
         slideEnd(false)
         close()
     }
     const onNo = () => {
-        dialogResult.current = { result: Result.No }
+        dialogResult.current = { result: ResultType.No }
         slideEnd(btnCancel ?? false)
         close()
     }

@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import './DialogBox.css'
 import DialogBox, { DialogBoxHandle } from './DialogBox'
+import { AsyncResult, Result } from 'functional-extensions'
 
 export enum Slide {
     None,
@@ -33,7 +34,7 @@ export interface Settings {
     extensionProps?: any
 }
 
-export enum Result {
+export enum ResultType {
     Ok,
     Yes,
     No,
@@ -41,13 +42,14 @@ export enum Result {
 } 
 
 export type DialogResult = {
-    result: Result
+    result: ResultType
     input?: string
     props?: any
 }
 
 export type DialogHandle = {
-    show: (settings: Settings)=>Promise<DialogResult>
+    show: (settings: Settings) => Promise<DialogResult>
+    showDialog: <T, TE>(settings: Settings, makeResult: (res: DialogResult)=>Result<T, TE>)=>AsyncResult<T, TE>
     close: ()=>void
 }
 
@@ -69,6 +71,15 @@ const Dialog = forwardRef<DialogHandle>((_, ref) => {
             return new Promise<DialogResult>(res => {
                 resolveResult.current = res
             })
+        },
+        showDialog<T, TE>(settingsValue: Settings, makeResult: (res: DialogResult) => Result<T, TE>) {
+            settings.current = settingsValue
+            setShow(true)
+            return new AsyncResult(
+                new Promise<DialogResult>(res => {
+                    resolveResult.current = res
+                })
+                .map(res => makeResult(res)))
         },
         close() {
             dialogBox.current?.close()
