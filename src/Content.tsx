@@ -36,6 +36,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
             defBtnCancel: true
         })
         await delayAsync(10000)
+        // TODO callback for close!
         dialog.close()
     }
     
@@ -65,6 +66,19 @@ function Content({ theme, onThemeChanged}: ContentProps) {
             btnYes: true,
             btnNo: true,
             btnCancel: true
+        })
+        console.log("Dialog closed", res)
+    }
+
+    const customButtonTextsDialog = async () => {
+        const res = await dialog.show({
+            text: "3 Buttons",
+            btnYes: true,
+            btnYesText: "Yes",
+            btnNo: true,
+            btnNoText: "No",
+            btnCancel: true,
+            btnCancelText: "Cancel"
         })
         console.log("Dialog closed", res)
     }
@@ -269,6 +283,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
                 <button onClick={showYesNoDialog}>Ja Nein</button>
                 <button onClick={showFullScreenDialog}>Fullscreen</button>
                 <button onClick={autoCloseDialog}>Auto close</button>
+                <button onClick={customButtonTextsDialog}>Custom Buttons</button>
             </p>
             <p>
 

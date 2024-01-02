@@ -20,10 +20,14 @@ export interface Settings {
     btnCancel?: boolean
     btnYes?: boolean
     btnNo?: boolean
-    defBtnOk?: boolean;
-    defBtnYes?: boolean;
-    defBtnNo?: boolean;
-    defBtnCancel?: boolean;
+    defBtnOk?: boolean
+    defBtnYes?: boolean
+    defBtnNo?: boolean
+    defBtnCancel?: boolean
+    btnOkText?: string
+    btnCancelText?: string
+    btnYesText?: string
+    btnNoText?: string
     slide?: Slide
     inputText?: string
     inputSelectRange?: number[]

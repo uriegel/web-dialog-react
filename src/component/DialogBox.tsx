@@ -16,6 +16,10 @@ interface DialogBoxProps {
     defBtnYes?: boolean;
     defBtnNo?: boolean;
     defBtnCancel?: boolean;
+    btnOkText?: string
+    btnCancelText?: string
+    btnYesText?: string
+    btnNoText?: string
     slide?: Slide
     inputText?: string
     inputSelectRange?: number[]
@@ -30,7 +34,8 @@ export type DialogBoxHandle = {
     close: ()=>void
 }
 
-const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes, defBtnCancel, defBtnNo, defBtnOk, defBtnYes,
+const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes,
+    defBtnCancel, defBtnNo, defBtnOk, defBtnYes, btnOkText, btnCancelText, btnNoText, btnYesText,
     inputText, inputSpellCheck, inputSelectRange, slide, fullscreen, extension, onExtensionChanged, extensionProps}, ref) => {
 
     const dialog = useRef<HTMLDivElement>(null)
@@ -188,28 +193,28 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
                             { btnOk ? (
                                 <div className={`wdr--button${defBtnOk ? " default" : ""}`}
                                         tabIndex={1} onClick={onOk}>
-                                    OK
+                                    { btnOkText || "OK" }
                                 </div>)
                                 : null
                             }
                             { btnYes ? (
                                 <div className={`wdr--button${defBtnYes ? " default" : ""}`}
                                     tabIndex={1} onClick={onYes}>   
-                                    Ja
+                                    { btnYesText || "Ja" }
                                 </div>)
                                 : null
                             }
                             { btnNo ? (
                                 <div className={`wdr--button${defBtnNo ? " default" : ""}`}
                                         tabIndex={2} onClick={onNo}>
-                                    Nein
+                                    { btnNoText || "Nein" }
                                 </div>)
                                 : null
                             }
                             { btnCancel ? (
                                 <div className={`wdr--button${defBtnCancel ? " default" : ""}`}
                                         tabIndex={3} onClick={onCancel}>
-                                    Abbrechen
+                                    { btnCancelText || "Abbrechen" }
                                 </div>)
                                 : null
                             }
