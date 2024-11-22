@@ -81,3 +81,9 @@ const WithDialog = ({ children }: WithDialogProps) => {
 }
 
 export default WithDialog
+
+// Version 5 -beta
+// actualize package.json
+// actualize react, vite
+// Cancel is Cross top right
+// 0-3 buttons with choosen text
