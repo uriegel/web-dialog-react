@@ -87,3 +87,4 @@ export default WithDialog
 // actualize react, vite
 // Cancel is Cross top right
 // 0-3 buttons with choosen text
+// Animation in Commander especially copy dialog
