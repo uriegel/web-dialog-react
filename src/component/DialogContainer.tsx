@@ -2,7 +2,6 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } f
 import './DialogBox.css'
 import { DialogHandle, DialogResult, Settings } from '.'
 import DialogBox, { DialogBoxHandle } from './DialogBox'
-import { AsyncResult, Result } from 'functional-extensions'
 
 const DialogContainer = forwardRef<DialogHandle>((_, ref) => {
     
@@ -16,21 +15,11 @@ const DialogContainer = forwardRef<DialogHandle>((_, ref) => {
     const dialogBox = useRef<DialogBoxHandle>(null)
 
     useImperativeHandle(ref, () => ({
-        show(settingsValue: Settings) {
+        async showDialog<T>(settingsValue: Settings, makeResult?: (res: DialogResult) => T) {
             settings.current = settingsValue
             setShow(true)
-            return new Promise<DialogResult>(res => {
-                resolveResult.current = res
-            })
-        },
-        showDialog<T, TE>(settingsValue: Settings, makeResult: (res: DialogResult) => Result<T, TE>) {
-            settings.current = settingsValue
-            setShow(true)
-            return new AsyncResult(
-                new Promise<DialogResult>(res => {
-                    resolveResult.current = res
-                })
-                .map(res => makeResult(res)))
+            const result = await new Promise<DialogResult>(res => resolveResult.current = res)
+            return (makeResult?.(result) ?? result) as T
         },
         close() {
             dialogBox.current?.close()

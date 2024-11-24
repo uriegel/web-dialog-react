@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useRef, useState } from 'react'
 import './DialogBox.css'
-import { AsyncResult, Result } from 'functional-extensions'
 import DialogContainer from './DialogContainer'
 
 export enum Slide {
@@ -10,7 +9,9 @@ export enum Slide {
 }
 
 export interface ExtensionProps {
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     onChange?: (t: any) => void
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     props?: any
 }
 
@@ -34,7 +35,9 @@ export interface Settings {
     inputSpellCheck?: boolean
     fullscreen?: boolean
     extension?: (props: ExtensionProps) => JSX.Element
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     onExtensionChanged?: (t: any) => void
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     extensionProps?: any
 }
 
@@ -48,12 +51,12 @@ export enum ResultType {
 export type DialogResult = {
     result: ResultType
     input?: string
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     props?: any
 }
 
 export type DialogHandle = {
-    show: (settings: Settings) => Promise<DialogResult>
-    showDialog: <T, TE>(settings: Settings, makeResult: (res: DialogResult)=>Result<T, TE>)=>AsyncResult<T, TE>
+    showDialog: <T>(settings: Settings, makeResult?: (res: DialogResult)=>T)=>Promise<T>
     close: ()=>void
 }
 
@@ -61,11 +64,13 @@ type WithDialogProps = {
     children: JSX.Element
 }
 
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const DialogContext = createContext(null as any as DialogHandle)
 
 const WithDialog = ({ children }: WithDialogProps) => {
     
     const dialog = useRef<DialogHandle>(null)
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any    
     const [dialogHandle, setDialogHandle] = useState(null as any as DialogHandle)
 
     useEffect(() => setDialogHandle(dialog.current!), [dialog])
@@ -82,9 +87,8 @@ const WithDialog = ({ children }: WithDialogProps) => {
 
 export default WithDialog
 
-// Version 5 -beta
-// actualize package.json
-// actualize react, vite
-// Cancel is Cross top right
-// 0-3 buttons with choosen text
-// Animation in Commander especially copy dialog
+// TODO dialog.showDialog => show
+// TODO disable lint warnings
+// TODO Cancel is Cross top right
+// TODO 0-3 buttons with choosen text
+// TODO Animation in Commander especially copy dialog

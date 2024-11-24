@@ -26,7 +26,9 @@ interface DialogBoxProps {
     inputSpellCheck?: boolean
     fullscreen?: boolean
     extension?: (props: ExtensionProps) => JSX.Element
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     onExtensionChanged?: (t: any) => void
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     extensionProps?: any
 }
 
@@ -119,6 +121,7 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
             if (focusIndex.current < 0)
                 focusIndex.current = focusables.current.length - 1
             const element = focusables.current[focusIndex.current]
+            //eslint-disable-next-line @typescript-eslint/no-explicit-any
             if (!(element as any).disabled) {
                 element.focus()
                 return true

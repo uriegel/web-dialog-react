@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react'
 import { DialogContext, ExtensionProps, ResultType, Slide } from './component' 
-import { Err, Ok, delayAsync } from 'functional-extensions'
 import { Theme, themes } from './themes'
+import { delayAsync } from 'functional-extensions'
 
 type ContentProps = {
     theme: Theme
@@ -20,7 +20,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     console.log("dialog", dialog)
 
     const showStandardDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Standard",
             btnOk: true,
             btnCancel: true,
@@ -30,7 +30,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const autoCloseDialog = async () => {
-        dialog.show({
+        dialog.showDialog({
             text: "Standard, closes after 10 s",
             btnCancel: true,
             defBtnCancel: true
@@ -41,7 +41,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
     
     const showSlideDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Slide from left",
             slide: Slide.Left,
             btnOk: true,
@@ -51,7 +51,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showSlideReverseDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Slide from right",
             slide: Slide.Right,
             btnOk: true,
@@ -61,7 +61,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const show3ButtonsDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "3 Buttons",
             btnYes: true,
             btnNo: true,
@@ -71,7 +71,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const customButtonTextsDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "3 Buttons",
             btnYes: true,
             btnYesText: "Yes",
@@ -84,23 +84,23 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showTextInputDialog = async () => {
-        const res = dialog.showDialog<string, boolean>({
+        const res = await dialog.showDialog<string|boolean>({
             text: "Text input:",
             inputText: "The text input",
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true
         }, res => res.result == ResultType.Ok && res.input
-            ? new Ok(res.input)
-            : new Err(false))
-        const rest = await res?.toResult()
-        rest?.match(
-            val => console.log("Chosen", val),
-            () => console.log("cancelled"))
+            ? res.input
+            : false)
+        if (res != false)
+            console.log("Chosen", res)
+        else
+            console.log("cancelled")
     }
 
     const showRenameDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Rename File:",
             inputText: "Apocalypse Now.mp4",
             inputSelectRange: [0, 14],
@@ -112,7 +112,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showOkDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Only Ok",
             btnOk: true
         })
@@ -120,7 +120,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showYesNoDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Yes and No",
             btnYes: true,
             btnNo: true
@@ -129,7 +129,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showFullScreenDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Fullscreen dialog",
             btnOk: true,
             fullscreen: true,
@@ -207,12 +207,13 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showExtendedDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Standard extended",
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true,
             extension: ExtendedContent,
+            //eslint-disable-next-line @typescript-eslint/no-explicit-any
             onExtensionChanged: (val: any) => {
                 console.log("On Changed", val)
             }
@@ -221,7 +222,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showExtendedDialogRes = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Standard extended",
             btnOk: true,
             btnCancel: true,
@@ -234,13 +235,14 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     
 
     const showExtendedInputDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Standard extended",
             inputText: "The text input",
             btnOk: true,
             btnCancel: true,
             defBtnCancel: true,
             extension: ExtendedContent,
+            //eslint-disable-next-line @typescript-eslint/no-explicit-any            
             onExtensionChanged: (val: any) => {
                 console.log("On Changed", val)
             }
@@ -249,7 +251,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showExtendedNoControlsDialog = async () => {
-        const res = await dialog.show({
+        const res = await dialog.showDialog({
             text: "Standard extended no Controls",
             btnOk: true,
             btnCancel: true,
