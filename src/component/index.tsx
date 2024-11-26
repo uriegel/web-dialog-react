@@ -85,7 +85,6 @@ const WithDialog = ({ children }: WithDialogProps) => {
 
 export default WithDialog
 
-// TODO space 
 // TODO > < navigate btns 
 // TODO Cancel Windows
 // TODO 0-3 buttons with choosen text

@@ -146,6 +146,12 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
                 } else
                     focusables.current[focusIndex.current].click()
                 break
+            case "Space":
+                if (buttonFocused) {
+                    focusables.current[focusIndex.current].click()
+                    break
+                } else
+                    return
             case "Escape":
                 if (btnCancel || !btnNo) 
                     onCancel()
