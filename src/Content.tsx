@@ -8,7 +8,7 @@ type ContentProps = {
     onThemeChanged: (theme:Theme)=>void
 }
 
-function Content({ theme, onThemeChanged}: ContentProps) {
+function Content({ theme, onThemeChanged }: ContentProps) {
 
     const onThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const theme = themes.find(n => n.name == e.target.value)!
@@ -48,15 +48,17 @@ function Content({ theme, onThemeChanged}: ContentProps) {
         console.log("Dialog closed", res)
     }
 
-    const showSlideReverseDialog = async () => {
-        const res = await dialog.show({
-            text: "Slide from right",
-            slide: Slide.Right,
-            btnOk: true,
-            btnCancel: true
-        })
-        console.log("Dialog closed", res)
-    }
+    const showSlideReverseDialog = async () =>
+    
+        setTimeout(async () => {
+            const res = await dialog.show({
+                text: "Slide from right",
+                slide: Slide.Right,
+                btnOk: true,
+                btnCancel: true
+            })
+            console.log("Dialog closed", res)
+        }, 1000)
 
     const show3ButtonsDialog = async () => {
         const res = await dialog.show({
