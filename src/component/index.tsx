@@ -85,8 +85,11 @@ const WithDialog = ({ children }: WithDialogProps) => {
 
 export default WithDialog
 
-// TODO > < navigate btns 
 // TODO Cancel Windows
+// TODO Default button lightblue
+// TODO Focused button has border
+// TODO Focused default button has border outline
+
 // TODO 0-3 buttons with choosen text
 // TODO disable lint warnings
 // TODO Animation in Commander especially copy dialog

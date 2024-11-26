@@ -138,6 +138,18 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
                 focusIndex.current = evt.shiftKey ? focusIndex.current - 1 : focusIndex.current + 1
                 focusCurrent(evt.shiftKey)
                 break
+            case "ArrowRight":            
+                if (focusIndex.current < focusables.current.length - 1) {
+                    focusIndex.current = focusIndex.current + 1
+                    focusCurrent(false)
+                }
+                break
+            case "ArrowLeft":            
+                if (focusIndex.current > 0) {
+                    focusIndex.current = focusIndex.current - 1
+                    focusCurrent(false)
+                }
+                break
             case "Enter": 
                 if (!buttonFocused) {
                     const element = focusables.current.find(n => n.classList.contains("default"))
