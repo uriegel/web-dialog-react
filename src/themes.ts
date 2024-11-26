@@ -4,7 +4,8 @@ export type Theme = {
 }
 
 export const themes = [
-    { name: "Blue", theme: "themeBlue" },
+    { name: "Windows", theme: "themeWindows" },
+    { name: "Windows dark", theme: "themeWindowsDark" },
     { name: "Adwaita", theme: "themeAdwaita" },
     { name: "Adwaita dark", theme: "themeAdwaitaDark" },
 ]

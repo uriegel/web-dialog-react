@@ -20,6 +20,16 @@
     --wdr-button-outlinestyle: solid;
     --wdr-button-outlineoffset: 1px;    
     --wdr-input-selection-color: blue;
+    --wdr-cancel-border-radius: 18px;
+    --wdr-cancel-margin-right: 10px;
+    --wdr-cancel-margin-top: 10px;
+    --wdr-cancel-padding: 3px 7px;
+    --wdr-cancel-color: black;
+    --wdr-cancel-hover-color: black;
+    --wdr-cancel-active-color: black;
+    --wdr-cancel-background-color: #e6e6e6;
+    --wdr-cancel-background-hover-color: #dcdcdc;
+    --wdr-cancel-background-active-color: #bebebe;
 }
 
 .wdr--dialogroot {
@@ -123,22 +133,23 @@
     
     font-size: 12px;
     font-weight: bold;
-    margin-right: 10px;
-    margin-top: 10px;
-    background-color: #e6e6e6;
-    border-radius: 18px;
-    
+    margin-right: var(--wdr-cancel-margin-right);
+    margin-top: var(--wdr-cancel-margin-top);
+    padding: var(--wdr-cancel-padding);    
+    color: var(--wdr-cancel-color);
+    background-color: var(--wdr-cancel-background-color);
     text-align: center;
-    padding: 3px 7px;
-    transition: background-color var(--wdr-animation-duration), outline-color 400ms;
+    transition: color, var(--wdr-animation-duration), background-color var(--wdr-animation-duration), outline-color 400ms;
 }
 
 .wdr--cancel:hover {
-    background-color: #dcdcdc;
+    color: var(--wdr-cancel-hover-color);
+    background-color: var(--wdr-cancel-background-hover-color);
 }
 
 .wdr--cancel:active {
-    background-color: #bebebe;
+    color: var(--wdr-cancel-active-color);
+    background-color: var(--wdr-cancel-background-active-color)
 }
 
 .wdr--button:hover {
@@ -159,7 +170,7 @@
 }
 
 .wdr--buttons > .wdr--cancel {
-    border-radius: 18px;
+    border-radius: var(--wdr-cancel-border-radius);
 }
 
 .buttonFocused .wdr--button.default {

@@ -85,8 +85,6 @@ const WithDialog = ({ children }: WithDialogProps) => {
 
 export default WithDialog
 
-// TODO Adwaita dark
-// TODO Cancel Windows
 // TODO Default button lightblue
 // TODO Focused button has border
 // TODO Focused default button has border outline

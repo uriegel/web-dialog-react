@@ -1,0 +1,11 @@
+:root .themeWindows {
+    --wdr-cancel-border-radius: 0px 10px 0px 0px;
+    --wdr-cancel-margin-right: 0px;
+    --wdr-cancel-margin-top: 0px;
+    --wdr-cancel-padding: 6px 10px;
+    --wdr-cancel-hover-color: white;
+    --wdr-cancel-active-color: white;
+    --wdr-cancel-background-color: white;
+    --wdr-cancel-background-hover-color: red;
+    --wdr-cancel-background-active-color: rgb(255, 89, 89);
+}
