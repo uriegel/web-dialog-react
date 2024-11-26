@@ -10,8 +10,6 @@
     --wdr-button-color: white;
     --wdr-button-padding: 2px 7px;
     --wdr-button-cornerradius: 3px;
-    --wdr-button-left-cornerradius: var(--wdr-button-cornerradius);
-    --wdr-button-right-cornerradius: var(--wdr-button-cornerradius);
     --wdr-button-bordercolor: transparent;
     --wdr-button-borderstyle: none;
     --wdr-button-borderwidth: 0px;    
@@ -65,10 +63,11 @@
 }
 
 .wdr--dialog {
+    position: relative;
     display: flex;
     flex-direction: column;
     margin: 30px;
-    border-radius: 5px;
+    border-radius: 10px;
     color: var(--wdr-main-color);
     background-color: var(--wdr-main-background-color);
     z-index: 10;
@@ -116,6 +115,32 @@
     border-width: var(--wdr-button-borderwidth);    
 }
 
+.wdr--cancel {
+    position: absolute;
+    user-select: none;
+    right: 0px;
+    top: 0px;
+    
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 10px;
+    background-color: #e6e6e6;
+    border-radius: 18px;
+    
+    text-align: center;
+    padding: var(--wdr-button-padding);
+    transition: background-color var(--wdr-animation-duration), outline-color 400ms;
+}
+
+.wdr--cancel:hover {
+    background-color: #dcdcdc;
+}
+
+.wdr--cancel:active {
+    background-color: #bebebe;
+}
+
 .wdr--button:hover {
     background-color: var(--wdr-button-hover-background-color);
 }     
@@ -133,12 +158,11 @@
     border-radius: var(--wdr-button-cornerradius);
 }
 
-.wdr--buttons :first-child {
-    border-bottom-left-radius: var(--wdr-button-left-cornerradius);
+.wdr--buttons > .wdr--cancel {
+    border-radius: 18px;
 }
-.wdr--buttons :last-child {
-    border-bottom-right-radius: var(--wdr-button-right-cornerradius);
-}
+
+.wdr--buttons > .wdr--cancel  {
 
 .buttonFocused .wdr--button.default {
     outline-width: 0px;

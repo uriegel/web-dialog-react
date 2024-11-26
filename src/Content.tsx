@@ -20,20 +20,18 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     console.log("dialog", dialog)
 
     const showStandardDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Standard",
             btnOk: true,
             btnCancel: true,
-            defBtnCancel: true
         })
         console.log("Dialog closed", res)
     }
 
     const autoCloseDialog = async () => {
-        dialog.showDialog({
+        dialog.show({
             text: "Standard, closes after 10 s",
             btnCancel: true,
-            defBtnCancel: true
         })
         await delayAsync(10000)
         // TODO callback for close!
@@ -41,7 +39,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
     
     const showSlideDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Slide from left",
             slide: Slide.Left,
             btnOk: true,
@@ -51,7 +49,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showSlideReverseDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Slide from right",
             slide: Slide.Right,
             btnOk: true,
@@ -61,7 +59,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const show3ButtonsDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "3 Buttons",
             btnYes: true,
             btnNo: true,
@@ -71,36 +69,32 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const customButtonTextsDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "3 Buttons",
             btnYes: true,
             btnYesText: "Yes",
             btnNo: true,
             btnNoText: "No",
             btnCancel: true,
-            btnCancelText: "Cancel"
         })
         console.log("Dialog closed", res)
     }
 
     const showTextInputDialog = async () => {
-        const res = await dialog.showDialog<string|boolean>({
+        const res = await dialog.show({
             text: "Text input:",
             inputText: "The text input",
             btnOk: true,
             btnCancel: true,
-            defBtnCancel: true
-        }, res => res.result == ResultType.Ok && res.input
-            ? res.input
-            : false)
-        if (res != false)
-            console.log("Chosen", res)
+        })
+        if (res.result == ResultType.Ok && res.input)
+            console.log("Chosen", res.input)
         else
             console.log("cancelled")
     }
 
     const showRenameDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Rename File:",
             inputText: "Apocalypse Now.mp4",
             inputSelectRange: [0, 14],
@@ -112,7 +106,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showOkDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Only Ok",
             btnOk: true
         })
@@ -120,7 +114,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showYesNoDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Yes and No",
             btnYes: true,
             btnNo: true
@@ -129,7 +123,7 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showFullScreenDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Fullscreen dialog",
             btnOk: true,
             fullscreen: true,
@@ -207,11 +201,10 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showExtendedDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Standard extended",
             btnOk: true,
             btnCancel: true,
-            defBtnCancel: true,
             extension: ExtendedContent,
             //eslint-disable-next-line @typescript-eslint/no-explicit-any
             onExtensionChanged: (val: any) => {
@@ -222,11 +215,10 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showExtendedDialogRes = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Standard extended",
             btnOk: true,
             btnCancel: true,
-            defBtnCancel: true,
             extension: ExtendedContentRes,
             extensionProps: { text: "The text", active: false }
         })
@@ -235,12 +227,11 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     
 
     const showExtendedInputDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Standard extended",
             inputText: "The text input",
             btnOk: true,
             btnCancel: true,
-            defBtnCancel: true,
             extension: ExtendedContent,
             //eslint-disable-next-line @typescript-eslint/no-explicit-any            
             onExtensionChanged: (val: any) => {
@@ -251,11 +242,10 @@ function Content({ theme, onThemeChanged}: ContentProps) {
     }
 
     const showExtendedNoControlsDialog = async () => {
-        const res = await dialog.showDialog({
+        const res = await dialog.show({
             text: "Standard extended no Controls",
             btnOk: true,
             btnCancel: true,
-            defBtnCancel: true,
             extension: ExtendedContentNoControls
         })
         console.log("Dialog closed", res)

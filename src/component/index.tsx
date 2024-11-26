@@ -24,9 +24,7 @@ export interface Settings {
     defBtnOk?: boolean
     defBtnYes?: boolean
     defBtnNo?: boolean
-    defBtnCancel?: boolean
     btnOkText?: string
-    btnCancelText?: string
     btnYesText?: string
     btnNoText?: string
     slide?: Slide
@@ -56,7 +54,7 @@ export type DialogResult = {
 }
 
 export type DialogHandle = {
-    showDialog: <T>(settings: Settings, makeResult?: (res: DialogResult)=>T)=>Promise<T>
+    show: (settings: Settings)=>Promise<DialogResult>
     close: ()=>void
 }
 
@@ -87,8 +85,9 @@ const WithDialog = ({ children }: WithDialogProps) => {
 
 export default WithDialog
 
-// TODO dialog.showDialog => show
-// TODO disable lint warnings
-// TODO Cancel is Cross top right
+// TODO space 
+// TODO > < navigate btns 
+// TODO Cancel Windows
 // TODO 0-3 buttons with choosen text
+// TODO disable lint warnings
 // TODO Animation in Commander especially copy dialog

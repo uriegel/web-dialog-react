@@ -15,9 +15,7 @@ interface DialogBoxProps {
     defBtnOk?: boolean;
     defBtnYes?: boolean;
     defBtnNo?: boolean;
-    defBtnCancel?: boolean;
     btnOkText?: string
-    btnCancelText?: string
     btnYesText?: string
     btnNoText?: string
     slide?: Slide
@@ -37,7 +35,7 @@ export type DialogBoxHandle = {
 }
 
 const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes,
-    defBtnCancel, defBtnNo, defBtnOk, defBtnYes, btnOkText, btnCancelText, btnNoText, btnYesText,
+    defBtnNo, defBtnOk, defBtnYes, btnOkText, btnNoText, btnYesText,
     inputText, inputSpellCheck, inputSelectRange, slide, fullscreen, extension, onExtensionChanged, extensionProps}, ref) => {
 
     const dialog = useRef<HTMLDivElement>(null)
@@ -122,6 +120,8 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
                 focusIndex.current = focusables.current.length - 1
             const element = focusables.current[focusIndex.current]
             //eslint-disable-next-line @typescript-eslint/no-explicit-any
+            if (!element)
+                return true
             if (!(element as any).disabled) {
                 element.focus()
                 return true
@@ -215,9 +215,9 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
                                 : null
                             }
                             { btnCancel ? (
-                                <div className={`wdr--button${defBtnCancel ? " default" : ""}`}
+                                <div className={"wdr--cancel"}
                                         tabIndex={3} onClick={onCancel}>
-                                    { btnCancelText || "Abbrechen" }
+                                    { <span>&#10005;</span> }
                                 </div>)
                                 : null
                             }

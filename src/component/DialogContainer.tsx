@@ -15,11 +15,11 @@ const DialogContainer = forwardRef<DialogHandle>((_, ref) => {
     const dialogBox = useRef<DialogBoxHandle>(null)
 
     useImperativeHandle(ref, () => ({
-        async showDialog<T>(settingsValue: Settings, makeResult?: (res: DialogResult) => T) {
+        async show(settingsValue: Settings) {
             settings.current = settingsValue
             setShow(true)
             const result = await new Promise<DialogResult>(res => resolveResult.current = res)
-            return (makeResult?.(result) ?? result) as T
+            return result
         },
         close() {
             dialogBox.current?.close()
@@ -50,9 +50,9 @@ const DialogContainer = forwardRef<DialogHandle>((_, ref) => {
     return show ? (
         <div className={`wdr--dialogroot${hidden ? " hidden" : ""}`} >
             <DialogBox ref={dialogBox} hidden={hidden} setShow={setShow} setResult={setResult} close={close} text={settings.current.text} btnCancel={settings.current.btnCancel}
-                btnNo={settings.current.btnNo} btnOk={settings.current.btnOk} btnYes={settings.current.btnYes} defBtnCancel={settings.current.defBtnCancel}
+                btnNo={settings.current.btnNo} btnOk={settings.current.btnOk} btnYes={settings.current.btnYes} 
                 defBtnNo={settings.current.defBtnNo} defBtnOk={settings.current.defBtnOk} defBtnYes={settings.current.defBtnYes}
-                btnOkText={settings.current.btnOkText} btnCancelText={settings.current.btnCancelText} btnYesText={settings.current.btnYesText} btnNoText={settings.current.btnNoText}
+                btnOkText={settings.current.btnOkText} btnYesText={settings.current.btnYesText} btnNoText={settings.current.btnNoText}
                 fullscreen={settings.current.fullscreen} inputSelectRange={settings.current.inputSelectRange} inputSpellCheck={settings.current.inputSpellCheck}
                 inputText={settings.current.inputText} slide={settings.current.slide}
                 extension={settings.current.extension} onExtensionChanged={settings.current.onExtensionChanged} extensionProps={settings.current.extensionProps}
