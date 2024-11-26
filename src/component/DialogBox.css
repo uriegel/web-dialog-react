@@ -129,7 +129,7 @@
     border-radius: 18px;
     
     text-align: center;
-    padding: var(--wdr-button-padding);
+    padding: 3px 7px;
     transition: background-color var(--wdr-animation-duration), outline-color 400ms;
 }
 
@@ -161,8 +161,6 @@
 .wdr--buttons > .wdr--cancel {
     border-radius: 18px;
 }
-
-.wdr--buttons > .wdr--cancel  {
 
 .buttonFocused .wdr--button.default {
     outline-width: 0px;

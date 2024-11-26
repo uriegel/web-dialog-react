@@ -1,26 +1,15 @@
 :root .themeAdwaita {
-    --wdr-main-background-color: #f6f5f4;
-    --wdr-buttons-gap: 0px;
-    --wdr-buttons-float: none;
-    --wdr-button-background-color: #f6f5f4;
+    --wdr-button-background-color: #ebebeb;
     --wdr-button-color: black;
-    --wdr-button-hover-background-color: white;
-    --wdr-button-active-background-color: #d6d1cd;   
-    --wdr-button-margin: 20px 0px 0px 0px;
-    --wdr-button-flexgrow: 1;
-    --wdr-button-marginleft: 0px;
+    --wdr-button-padding: 5px 25px;
+    --wdr-button-hover-background-color: #dcdcdc;
+    --wdr-button-active-background-color: #bebebe;   
     --wdr-button-focus-color: blue;    
-    --wdr-button-cornerradius: 0px;
-    --wdr-button-left-cornerradius: var(--wdr-button-buttomradius);
-    --wdr-button-right-cornerradius: var(--wdr-button-buttomradius);
     --wdr-button-bordercolor: lightgray;
     --wdr-button-borderstyle: solid;
-    --wdr-button-borderwidth: 1px 0px 1px 1px;
-    --wdr-button-first-borderwidth: 0px;
-    --wdr-button-buttomradius: 5px;
-    --wdr-button-padding: 10px 50px;
-    --wdr-button-outlinestyle: dotted;
-    --wdr-button-outlineoffset: -2px;
+    --wdr-button-cornerradius: 5px;
+    --wdr-button-outlinestyle: solid;
+    --wdr-button-outlineoffset: 0px;
     --wdr-input-selection-color: #3584e4;
 }
 
