@@ -85,6 +85,8 @@ const WithDialog = ({ children }: WithDialogProps) => {
 
 export default WithDialog
 
+// TODO Arrow focus control: when listbox is selected, then the Arrow right selects the already selected btn
+// TODO Arrow focus control: when listbox is selected, then the Arrow left selects nothing!
 // TODO 0-3 buttons with choosen text
 // TODO disable lint warnings
 // TODO Animation in Commander especially copy dialog
