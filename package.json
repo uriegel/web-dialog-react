@@ -1,7 +1,7 @@
 {
   "name": "web-dialog-react",
   "type": "module",
-  "version": "5.0.0-beta3",
+  "version": "5.0.0-beta4",
   "description": "Web Dialog using React",
   "author": "uriegel",
   "license": "MIT",

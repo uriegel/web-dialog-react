@@ -85,7 +85,6 @@ const WithDialog = ({ children }: WithDialogProps) => {
 
 export default WithDialog
 
-// TODO Arrow focus control: Check if focused control is text input
 // TODO 0-3 buttons with choosen text
 // TODO disable lint warnings
 // TODO Animation in Commander especially copy dialog

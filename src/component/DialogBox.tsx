@@ -143,6 +143,9 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
                 focusCurrent(evt.shiftKey)
                 break
             case "ArrowRight":
+                if (focusables.current[focusIndex.current]?.tagName == "INPUT")
+                    return
+
                 if (focusIndex.current < focusables.current.length - 1) {
                     if (focusIndex.current > buttonFocusOffset.current)
                         focusIndex.current = buttonFocusOffset.current + 1
@@ -152,7 +155,9 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
                 }
                 break
             case "ArrowLeft":
-                console.log(focusables.current[focusIndex.current])
+                if (focusables.current[focusIndex.current]?.tagName == "INPUT")
+                    return
+                
                 if (focusIndex.current >= 0) {
                     if (focusIndex.current > buttonFocusOffset.current + 1)
                         focusIndex.current = buttonFocusOffset.current - 1
