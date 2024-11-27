@@ -8,4 +8,15 @@
     --wdr-cancel-background-color: white;
     --wdr-cancel-background-hover-color: red;
     --wdr-cancel-background-active-color: rgb(255, 89, 89);
+    --wdr-button-default-background-color: blue;
+    --wdr-button-default-color: white;
+    --wdr-button-default-background-hover-color: #7979ff;
+    --wdr-button-default-background-active-color: #01018e;
+
+    --wdr-button-font-weight: normal;
+    --wdr-button-background-color: #ebebeb;
+    --wdr-button-color: black;
+    --wdr-button-hover-background-color: #dcdcdc;
+    --wdr-button-active-background-color: #bebebe;   
+
 }
