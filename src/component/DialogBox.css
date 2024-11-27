@@ -5,6 +5,7 @@
     --wdr-animation-duration: 0.3s;
     --wdr-buttons-gap: 5px;
     --wdr-buttons-float: right;
+    --wdr-button-font-weight: bold;
     --wdr-button-margin: 20px 30px 30px 30px;
     --wdr-button-background-color: blue;
     --wdr-button-color: white;
@@ -13,7 +14,10 @@
     --wdr-button-bordercolor: transparent;
     --wdr-button-borderstyle: none;
     --wdr-button-borderwidth: 0px;    
-    --wdr-button-default-color: rgb(138, 138, 138);
+    --wdr-button-default-color: white;
+    --wdr-button-default-background-color: #3584e4;
+    --wdr-button-default-background-hover-color: #4990e7;
+    --wdr-button-default-background-active-color: #2a6ab6;
     --wdr-button-hover-background-color: #7979ff;
     --wdr-button-active-background-color: #01018e;
     --wdr-button-focus-color: blue;
@@ -112,6 +116,7 @@
 }
 
 .wdr--button {
+    font-weight: var(--wdr-button-font-weight);
     min-width: 40px;
     background-color: var(--wdr-button-background-color);
     outline-color: var(--wdr-main-background-color);
@@ -159,10 +164,15 @@
     background-color: var(--wdr-button-active-background-color);
 }
 .wdr--button.default {
-    outline-color: var(--wdr-button-default-color);
-    outline-width: 1px;
+    color: var(--wdr-button-default-color);
+    background-color: var(--wdr-button-default-background-color);
+    outline-color: var(--wdr-button-default-background-color);
+    outline-width: 0px;
     outline-style: var(--wdr-button-outlinestyle);
     outline-offset: var(--wdr-button-outlineoffset);
+}
+.wdr--button.default:hover {
+    background-color: var(--wdr-button-default-background-hover-color);
 }
 
 .wdr--buttons > div {
@@ -173,10 +183,6 @@
     border-radius: var(--wdr-cancel-border-radius);
 }
 
-.buttonFocused .wdr--button.default {
-    outline-width: 0px;
-}
-
 .wdr--button:focus {
     outline-color: var(--wdr-button-focus-color);
     outline-width: 1px;
@@ -184,8 +190,13 @@
     outline-offset: var(--wdr-button-outlineoffset);
 }                         
 
-.buttonFocused .wdr--button.default.wdr--button:focus {
+.wdr--button.default:focus {
     outline-width: 1px;
+    outline-offset: 1px;
+}
+
+.wdr--button.default:active {
+    background-color: var(--wdr-button-default-background-active-color);
 }
 
 .wdr--input {

@@ -70,6 +70,17 @@ function Content({ theme, onThemeChanged }: ContentProps) {
         console.log("Dialog closed", res)
     }
 
+    const show3ButtonsDefaultDialog = async () => {
+        const res = await dialog.show({
+            text: "3 Buttons",
+            btnYes: true,
+            btnNo: true,
+            btnCancel: true,
+            defBtnNo: true
+        })
+        console.log("Dialog closed", res)
+    }
+
     const customButtonTextsDialog = async () => {
         const res = await dialog.show({
             text: "3 Buttons",
@@ -271,6 +282,7 @@ function Content({ theme, onThemeChanged }: ContentProps) {
                 <button onClick={showSlideDialog}>Slide Left</button> 
                 <button onClick={showSlideReverseDialog}>Slide Right</button> 
                 <button onClick={show3ButtonsDialog}>3 Buttons</button> 
+                <button onClick={show3ButtonsDefaultDialog}>3 Buttons (Default)</button> 
                 <button onClick={showTextInputDialog}>Text input</button> 
                 <button onClick={showRenameDialog}>Rename file</button> 
                 <button onClick={showOkDialog}>OK</button> 
