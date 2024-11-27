@@ -42,6 +42,8 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
 
     const focusables = useRef<HTMLElement[]>([])
     const focusIndex = useRef(0)
+    const buttonFocusables = useRef<HTMLElement[]>([])
+    const buttonFocusOffset = useRef(0)
     const dialogResult = useRef<DialogResult>({result: ResultType.Cancel})
 
     const [textValue, setTextValue] = useState(inputText || "")
@@ -62,6 +64,8 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
             const extendedFocusables = extension ? [...dialog.current.querySelectorAll(".wdr-focusable")] as HTMLElement[] : []
             const inputs = input.current ? [input.current as HTMLElement] : []
             focusables.current = inputs.concat(extendedFocusables).concat(buttons)
+            buttonFocusables.current = focusables.current.filter(n => n.classList.contains("wdr--button"))
+            buttonFocusOffset.current = inputs.concat(extendedFocusables).length
             focusIndex.current = extendedFocusables.length == 0 && inputs.length == 0
                 ? buttons.findIndex(n => n.className.includes("default"))
                 : 0
@@ -134,19 +138,26 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
 
     const onKeyDown = (evt: React.KeyboardEvent) => {
         switch (evt.code) {
-            case "Tab": 
+            case "Tab":
                 focusIndex.current = evt.shiftKey ? focusIndex.current - 1 : focusIndex.current + 1
                 focusCurrent(evt.shiftKey)
                 break
-            case "ArrowRight":            
+            case "ArrowRight":
                 if (focusIndex.current < focusables.current.length - 1) {
-                    focusIndex.current = focusIndex.current + 1
+                    if (focusIndex.current > buttonFocusOffset.current)
+                        focusIndex.current = buttonFocusOffset.current + 1
+                    else
+                        focusIndex.current = focusables.current.length - 1
                     focusCurrent(false)
                 }
                 break
-            case "ArrowLeft":            
-                if (focusIndex.current > 0) {
-                    focusIndex.current = focusIndex.current - 1
+            case "ArrowLeft":
+                console.log(focusables.current[focusIndex.current])
+                if (focusIndex.current >= 0) {
+                    if (focusIndex.current > buttonFocusOffset.current + 1)
+                        focusIndex.current = buttonFocusOffset.current - 1
+                    else 
+                        focusIndex.current = buttonFocusOffset.current
                     focusCurrent(false)
                 }
                 break

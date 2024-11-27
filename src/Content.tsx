@@ -118,6 +118,19 @@ function Content({ theme, onThemeChanged }: ContentProps) {
         console.log("Dialog closed", res)
     }
 
+    const showRename2Dialog = async () => {
+        const res = await dialog.show({
+            text: "Rename File:",
+            inputText: "Apocalypse Now.mp4",
+            inputSelectRange: [0, 14],
+            btnYes: true,
+            btnNo: true,
+            btnCancel: true,
+            defBtnNo: true
+        })
+        console.log("Dialog closed", res)
+    }
+    
     const showOkDialog = async () => {
         const res = await dialog.show({
             text: "Only Ok",
@@ -285,6 +298,7 @@ function Content({ theme, onThemeChanged }: ContentProps) {
                 <button onClick={show3ButtonsDefaultDialog}>3 Buttons (Default)</button> 
                 <button onClick={showTextInputDialog}>Text input</button> 
                 <button onClick={showRenameDialog}>Rename file</button> 
+                <button onClick={showRename2Dialog}>Rename file 2</button> 
                 <button onClick={showOkDialog}>OK</button> 
                 <button onClick={showYesNoDialog}>Ja Nein</button>
                 <button onClick={showFullScreenDialog}>Fullscreen</button>
