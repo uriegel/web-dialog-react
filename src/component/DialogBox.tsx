@@ -70,7 +70,7 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
                 ? buttons.findIndex(n => n.className.includes("default"))
                 : 0
             focusIndex.current = focusIndex.current != -1 ? focusIndex.current : 0
-            setTimeout(() => setSlideControl(Slide.None), 100)
+            setTimeout(() => setSlideControl(Slide.None), 50)
             focusCurrent()
             if (inputSelectRange)
                 input.current?.setSelectionRange(inputSelectRange[0], inputSelectRange[1])
