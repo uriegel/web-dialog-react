@@ -37,7 +37,7 @@ const DialogContainer = forwardRef<DialogHandle>((_, ref) => {
 
     useEffect(() => {
         if (show) 
-            setHidden(false)
+            setTimeout(() => setHidden(false), 50)
     }, [show])
     
     const setResult = (result: DialogResult) => {
