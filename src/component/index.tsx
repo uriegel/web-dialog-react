@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useRef, useState } from 'react'
+import React, { createContext, JSX, useEffect, useRef, useState } from 'react'
 import './DialogBox.css'
 import DialogContainer from './DialogContainer'
 
