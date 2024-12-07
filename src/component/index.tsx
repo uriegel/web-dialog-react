@@ -55,7 +55,8 @@ export type DialogResult = {
 
 export type DialogHandle = {
     show: (settings: Settings)=>Promise<DialogResult>
-    close: ()=>void
+    close: () => void
+    setCallback: (cb: (show: boolean) => void) => void 
 }
 
 type WithDialogProps = {

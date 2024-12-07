@@ -9,6 +9,7 @@ const DialogContainer = forwardRef<DialogHandle>((_, ref) => {
     const [hidden, setHidden] = useState(true)
    
     const settings = useRef<Settings>({ text: "" })
+    const callback = useRef<(show: boolean)=>void | null>(null)
     const lastActive = useRef<HTMLElement | null>(null)
     const resolveResult = useRef<((result: DialogResult) => void) | null>(null)
 
@@ -17,12 +18,17 @@ const DialogContainer = forwardRef<DialogHandle>((_, ref) => {
     useImperativeHandle(ref, () => ({
         async show(settingsValue: Settings) {
             settings.current = settingsValue
+            callback.current?.(true)
             setShow(true)
             const result = await new Promise<DialogResult>(res => resolveResult.current = res)
+            callback.current?.(false)
             return result
         },
         close() {
             dialogBox.current?.close()
+        },
+        setCallback(cb: (show: boolean) => void) {
+            callback.current = cb
         }
     }))
 

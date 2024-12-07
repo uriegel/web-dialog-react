@@ -16,6 +16,7 @@ function Content({ theme, onThemeChanged }: ContentProps) {
     }
 
     const dialog = useContext(DialogContext)
+    dialog?.setCallback(show => console.log("show", show))
 
     console.log("dialog", dialog)
 
