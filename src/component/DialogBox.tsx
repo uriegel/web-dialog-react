@@ -221,7 +221,7 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
                         }
                         {
                             extension 
-                            ? extension({ onChange: onExtensionChanged, props: extensionProps })
+                            ? extension({ onChange: onExtensionChanged, props: extensionProps, close })
                             :null
                         }
                     </div>

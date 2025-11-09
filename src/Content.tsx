@@ -166,7 +166,14 @@ function Content({ theme, onThemeChanged }: ContentProps) {
         </>
     )
 
-    const ExtendedContent = ({onChange }: ExtensionProps) => {
+    const ExtendedContentClose = ({ close }: ExtensionProps) => (
+        <>
+            <p>Some extended content</p>
+            <button onClick={close}>Close Dialog</button>
+        </>
+    )
+
+    const ExtendedContent = ({ onChange }: ExtensionProps) => {
         
         const [option1, setOption1] = useState(false)
         const [option2, setOption2] = useState(true)
@@ -278,6 +285,20 @@ function Content({ theme, onThemeChanged }: ContentProps) {
         console.log("Dialog closed", res)
     }
 
+    const showExtendedCloseDialog = async () => {
+        const res = await dialog.show({
+            text: "Standard extended",
+            btnOk: true,
+            btnCancel: true,
+            extension: ExtendedContentClose,
+            //eslint-disable-next-line @typescript-eslint/no-explicit-any            
+            onExtensionChanged: (val: any) => {
+                console.log("On Changed", val)
+            }
+        })
+        console.log("Dialog closed", res)
+    }
+
     return (
         <>
             <select value={theme.name} onChange={onThemeChange}>
@@ -305,6 +326,7 @@ function Content({ theme, onThemeChanged }: ContentProps) {
                 <button onClick={showFullScreenDialog}>Fullscreen</button>
                 <button onClick={autoCloseDialog}>Auto close</button>
                 <button onClick={customButtonTextsDialog}>Custom Buttons</button>
+                <button onClick={showExtendedCloseDialog}>Dialog close</button>
             </p>
             <p>
 
