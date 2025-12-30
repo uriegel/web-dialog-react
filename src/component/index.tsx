@@ -16,6 +16,8 @@ export interface ExtensionProps {
     close: () => void
 }
 
+export type InputType = "number" | "password" | "text" | "url" 
+
 export interface Settings {
     text: string
     btnOk?: boolean
@@ -31,6 +33,7 @@ export interface Settings {
     slide?: Slide
     inputText?: string
     inputSelectRange?: number[]
+    inputType?: InputType
     inputSpellCheck?: boolean
     fullscreen?: boolean
     extension?: (props: ExtensionProps) => JSX.Element

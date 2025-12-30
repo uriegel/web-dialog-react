@@ -1,5 +1,5 @@
 import React, { forwardRef, JSX, useEffect, useImperativeHandle, useRef, useState } from "react"
-import { DialogResult, ExtensionProps, ResultType, Slide } from "."
+import { DialogResult, ExtensionProps, InputType, ResultType, Slide } from "."
 import "./DialogBox.css"
 
 interface DialogBoxProps {
@@ -22,6 +22,7 @@ interface DialogBoxProps {
     inputText?: string
     inputSelectRange?: number[]
     inputSpellCheck?: boolean
+    inputType?: InputType
     fullscreen?: boolean
     extension?: (props: ExtensionProps) => JSX.Element
     //eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,8 +36,8 @@ export type DialogBoxHandle = {
 }
 
 const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow, setResult, close, text, btnOk, btnCancel, btnNo, btnYes,
-    defBtnNo, defBtnOk, defBtnYes, btnOkText, btnNoText, btnYesText,
-    inputText, inputSpellCheck, inputSelectRange, slide, fullscreen, extension, onExtensionChanged, extensionProps}, ref) => {
+    defBtnNo, defBtnOk, defBtnYes, btnOkText, btnNoText, btnYesText, inputText, inputSpellCheck, inputSelectRange, inputType,
+    slide, fullscreen, extension, onExtensionChanged, extensionProps }, ref) => {
 
     const dialog = useRef<HTMLDivElement>(null)
 
@@ -193,6 +194,14 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setTextValue(e.target.value)
 
+    const onInputEnter = (e: React.KeyboardEvent) => {
+        if (e.key == "Enter") {
+            const element = focusables.current.find(n => n.classList.contains("default"))
+            if (element)
+                element.click()
+        }
+    }
+
     const onFocus = () => {
         focusIndex.current = focusables.current.findIndex(n => n == document.activeElement)
         if (focusIndex.current == -1)
@@ -200,6 +209,8 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
         setButtonFocused(focusables.current[focusIndex.current].classList.contains("wdr--button"))
     }
 
+    const getType = () => inputType || "text"
+    
     return (
         <>
             <div className='wdr--fader' onTransitionEnd={onFaderTransitionEnd}></div>
@@ -215,8 +226,8 @@ const DialogBox = forwardRef<DialogBoxHandle, DialogBoxProps>(({ hidden, setShow
                     <div className='wdr--content'>
                         <p>{text}</p>
                         { inputText != undefined
-                            ? (<input type={"text"} ref={input} className='wdr--input' spellCheck={inputSpellCheck == true} value={textValue} onChange={onInputChange}
-                                onFocus={selectInput}></input>)
+                            ? (<input ref={input} type={getType()} className='wdr--input' spellCheck={inputSpellCheck == true} value={textValue} onChange={onInputChange}
+                                onKeyDown={onInputEnter} onFocus={selectInput}></input>)
                             : null
                         }
                         {

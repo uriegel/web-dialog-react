@@ -98,8 +98,10 @@ function Content({ theme, onThemeChanged }: ContentProps) {
         const res = await dialog.show({
             text: "Text input:",
             inputText: "The text input",
+            inputType: 'url',
             btnOk: true,
             btnCancel: true,
+            defBtnOk: true
         })
         if (res.result == ResultType.Ok && res.input)
             console.log("Chosen", res.input)

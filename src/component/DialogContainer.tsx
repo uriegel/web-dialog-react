@@ -60,7 +60,7 @@ const DialogContainer = forwardRef<DialogHandle>((_, ref) => {
                 defBtnNo={settings.current.defBtnNo} defBtnOk={settings.current.defBtnOk} defBtnYes={settings.current.defBtnYes}
                 btnOkText={settings.current.btnOkText} btnYesText={settings.current.btnYesText} btnNoText={settings.current.btnNoText}
                 fullscreen={settings.current.fullscreen} inputSelectRange={settings.current.inputSelectRange} inputSpellCheck={settings.current.inputSpellCheck}
-                inputText={settings.current.inputText} slide={settings.current.slide}
+                inputText={settings.current.inputText} inputType={settings.current.inputType} slide={settings.current.slide}
                 extension={settings.current.extension} onExtensionChanged={settings.current.onExtensionChanged} extensionProps={settings.current.extensionProps}
             />
         </div>
