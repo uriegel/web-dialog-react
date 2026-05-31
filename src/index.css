@@ -7,3 +7,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --basis-farbe: #332299;
+
+  --helle-farbe: oklch(from var(--basis-farbe) clamp(0, l * 2.5, 1) calc(c *0.4) h);
+
+  --complement-farbe: hsl(from var(--basis-farbe) calc(h - 100) s l);
+}
+
+.original {
+  background-color: var(--basis-farbe);
+}
+
+.light {
+  background-color: var(--helle-farbe);
+}
+
+.complement {
+  background-color: var(--complement-farbe);
+}

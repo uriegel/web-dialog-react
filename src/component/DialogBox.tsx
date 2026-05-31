@@ -1,5 +1,5 @@
-import React, { forwardRef, JSX, useEffect, useImperativeHandle, useRef, useState } from "react"
-import { DialogResult, ExtensionProps, InputType, ResultType, Slide } from "."
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState, type JSX } from "react"
+import { ResultType, Slide, type DialogResult, type ExtensionProps, type InputType } from "."
 import "./DialogBox.css"
 
 interface DialogBoxProps {

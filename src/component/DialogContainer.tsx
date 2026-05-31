@@ -1,7 +1,7 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import './DialogBox.css'
-import { DialogHandle, DialogResult, Settings } from '.'
-import DialogBox, { DialogBoxHandle } from './DialogBox'
+import DialogBox, { type DialogBoxHandle } from './DialogBox'
+import type { DialogHandle, DialogResult, Settings } from '.'
 
 const DialogContainer = forwardRef<DialogHandle>((_, ref) => {
     
