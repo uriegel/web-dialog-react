@@ -116,6 +116,7 @@
     min-width: 40px;
     background-color: var(--wdr-button-background-color);
     outline-color: var(--wdr-main-background-color);
+    -webkit-user-select: none;
     user-select: none;
     color: var(--wdr-button-color);
     text-align: center;
@@ -128,6 +129,7 @@
 
 .wdr--cancel {
     position: absolute;
+    -webkit-user-select: none;
     user-select: none;
     right: 0px;
     top: 0px;
