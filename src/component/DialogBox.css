@@ -16,9 +16,6 @@
     --wdr-button-borderwidth: 0px;    
     --wdr-button-default-color: white;
     --wdr-button-default-background-color: #3584e4;
-    --wdr-button-default-background-hover-color: #4990e7;
-    --wdr-button-default-background-active-color: #2a6ab6;
-    --wdr-button-active-background-color: #01018e;
     --wdr-button-focus-color: blue;
     --wdr-button-outlinestyle: solid;
     --wdr-button-outlineoffset: 1px;    
@@ -171,7 +168,10 @@
     outline-offset: var(--wdr-button-outlineoffset);
 }
 .wdr--button.default:hover {
-    background-color: var(--wdr-button-default-background-hover-color);
+    background-color: oklch(from var(--wdr-button-default-background-color) calc(l - 0.1) c h);    
+}
+.wdr--button.default:active {
+    background-color: oklch(from var(--wdr-button-default-background-color) calc(l - 0.2) c h);    
 }
 
 .wdr--buttons > div {
@@ -192,10 +192,6 @@
 .wdr--button.default:focus {
     outline-width: 1px;
     outline-offset: 1px;
-}
-
-.wdr--button.default:active {
-    background-color: var(--wdr-button-default-background-active-color);
 }
 
 .wdr--input {
